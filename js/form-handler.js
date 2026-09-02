@@ -242,10 +242,14 @@ function copiarPix() {
 // ===== Gerar PIX (global) =====
 function gerarPixCopiaCola() {
     const merchantAccountInfo =
-        '00' + '14' + 'BR.GOV.BCB.PIX' +
+        '00' + '14' + 'br.gov.bcb.pix' +
         '01' + String(CONFIG.PIX_CHAVE.length).padStart(2, '0') + CONFIG.PIX_CHAVE;
 
     const valor = CONFIG.VALOR.toFixed(2);
+
+    // Campo 62: Reference Label (txid) — "***" indica que não há id de transação específico
+    const txid = '***';
+    const additionalData = '05' + String(txid.length).padStart(2, '0') + txid;
 
     const payload =
         '00' + '02' + '01' +
@@ -256,7 +260,7 @@ function gerarPixCopiaCola() {
         '58' + '02' + 'BR' +
         '59' + String(CONFIG.PIX_NOME.length).padStart(2, '0') + CONFIG.PIX_NOME +
         '60' + String(CONFIG.PIX_CIDADE.length).padStart(2, '0') + CONFIG.PIX_CIDADE +
-        '62' + '05' + '03***';
+        '62' + String(additionalData.length).padStart(2, '0') + additionalData;
 
     const crc = calcularCRC16(payload + '6304');
     return payload + '6304' + crc;
