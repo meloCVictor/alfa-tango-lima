@@ -159,6 +159,21 @@ create policy "modulos_select_admin" on public.modulos
 --    (select id from public.cursos where slug = 'alvorada'));
 
 -- ==========================================================
+-- Migração única: recupera alunos que se cadastraram ANTES da tabela
+-- matriculas existir (ficaram sem matrícula visível no admin).
+-- Ajuste o slug do curso se os alunos antigos forem de outro curso.
+--
+-- insert into public.matriculas (aluno_id, curso_id, liberado)
+-- select p.id, (select id from public.cursos where slug = 'alvorada'), p.liberado
+-- from public.profiles p
+-- where not exists (
+--     select 1 from public.matriculas m
+--     where m.aluno_id = p.id
+--     and m.curso_id = (select id from public.cursos where slug = 'alvorada')
+-- );
+-- ==========================================================
+
+-- ==========================================================
 -- Passo único e manual: torne sua própria conta admin depois de se cadastrar
 -- normalmente pelo formulário do site (troque o e-mail abaixo pelo seu):
 --
@@ -166,4 +181,3 @@ create policy "modulos_select_admin" on public.modulos
 --
 -- Depois disso, acesse /admin.html logado com essa conta para liberar alunos.
 -- ==========================================================
-
