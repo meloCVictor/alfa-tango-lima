@@ -25,30 +25,62 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     document.getElementById('painel').style.display = 'block';
+
+    await carregarCursos();
     await carregarAlunos();
+
+    document.getElementById('filtro-curso').addEventListener('change', carregarAlunos);
 });
+
+async function carregarCursos() {
+    const select = document.getElementById('filtro-curso');
+    const { data: cursos, error } = await supabaseClient
+        .from('cursos')
+        .select('id, nome')
+        .order('nome', { ascending: true });
+
+    if (error || !cursos) return;
+
+    cursos.forEach(function (curso) {
+        const option = document.createElement('option');
+        option.value = curso.id;
+        option.textContent = curso.nome;
+        select.appendChild(option);
+    });
+}
 
 async function carregarAlunos() {
     const lista = document.getElementById('lista-alunos');
     lista.innerHTML = '<p style="color: var(--cinza-claro);">Carregando alunos...</p>';
 
-    const { data: alunos, error } = await supabaseClient
-        .from('profiles')
-        .select('id, nome, email, telefone, cargo, liberado, created_at')
+    const cursoId = document.getElementById('filtro-curso').value;
+
+    let query = supabaseClient
+        .from('matriculas')
+        .select('id, liberado, created_at, profiles(nome, email, telefone, cargo), cursos(nome)')
         .order('created_at', { ascending: false });
+
+    if (cursoId) {
+        query = query.eq('curso_id', cursoId);
+    }
+
+    const { data: matriculas, error } = await query;
 
     if (error) {
         lista.innerHTML = '<p style="color: var(--vermelho-urgencia);">Erro ao carregar alunos: ' + error.message + '</p>';
         return;
     }
 
-    if (!alunos || alunos.length === 0) {
-        lista.innerHTML = '<p style="color: var(--cinza-claro);">Nenhum aluno cadastrado ainda.</p>';
+    if (!matriculas || matriculas.length === 0) {
+        lista.innerHTML = '<p style="color: var(--cinza-claro);">Nenhum aluno matriculado ainda.</p>';
         return;
     }
 
     lista.innerHTML = '';
-    alunos.forEach(function (aluno) {
+    matriculas.forEach(function (matricula) {
+        const aluno = matricula.profiles || {};
+        const curso = matricula.cursos || {};
+
         const card = document.createElement('div');
         card.className = 'card';
         card.style.display = 'flex';
@@ -56,34 +88,35 @@ async function carregarAlunos() {
         card.style.justifyContent = 'space-between';
         card.style.gap = '16px';
 
-        const status = aluno.liberado
+        const status = matricula.liberado
             ? '<span style="color: #16a34a; font-weight: 700;">✓ Liberado</span>'
             : '<span style="color: var(--vermelho-urgencia); font-weight: 700;">Aguardando pagamento</span>';
 
         card.innerHTML =
             '<div>' +
-                '<strong style="color: var(--verde-escuro);">' + (aluno.nome || '(sem nome)') + '</strong><br>' +
+                '<strong style="color: var(--verde-escuro);">' + (aluno.nome || '(sem nome)') + '</strong> ' +
+                '<span style="font-size: 0.8rem; background: var(--verde-claro); color: var(--verde-principal); padding: 2px 8px; border-radius: 50px;">' + (curso.nome || '-') + '</span><br>' +
                 '<span style="font-size: 0.85rem; color: var(--cinza-claro);">' + aluno.email + ' · ' + (aluno.telefone || '-') + '</span><br>' +
                 '<span style="font-size: 0.8rem;">' + status + '</span>' +
             '</div>';
 
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.textContent = aluno.liberado ? 'Revogar acesso' : 'Liberar acesso';
-        btn.style.cssText = 'padding: 10px 18px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; color: white; background: ' +
-            (aluno.liberado ? 'var(--vermelho-urgencia)' : 'var(--verde-principal)') + ';';
+        btn.textContent = matricula.liberado ? 'Revogar acesso' : 'Liberar acesso';
+        btn.style.cssText = 'padding: 10px 18px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; color: white; flex-shrink: 0; background: ' +
+            (matricula.liberado ? 'var(--vermelho-urgencia)' : 'var(--verde-principal)') + ';';
         btn.addEventListener('click', async function () {
             btn.disabled = true;
             btn.textContent = 'Salvando...';
             const { error: erroUpdate } = await supabaseClient
-                .from('profiles')
-                .update({ liberado: !aluno.liberado })
-                .eq('id', aluno.id);
+                .from('matriculas')
+                .update({ liberado: !matricula.liberado })
+                .eq('id', matricula.id);
 
             if (erroUpdate) {
                 alert('Erro ao atualizar: ' + erroUpdate.message);
                 btn.disabled = false;
-                btn.textContent = aluno.liberado ? 'Revogar acesso' : 'Liberar acesso';
+                btn.textContent = matricula.liberado ? 'Revogar acesso' : 'Liberar acesso';
                 return;
             }
             await carregarAlunos();

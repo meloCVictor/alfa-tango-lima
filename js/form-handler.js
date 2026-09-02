@@ -5,6 +5,7 @@ const CONFIG = {
     PIX_CIDADE: 'ALVORADA',
     VALOR: 29.90,
     WHATSAPP_NUMERO: '5549999191709',
+    CURSO_SLUG: 'alvorada', // precisa bater com o slug cadastrado na tabela public.cursos
     GOOGLE_SCRIPT_URL: '' // Deixe vazio até configurar o Google Sheets
 };
 
@@ -21,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===== Clique no botão de pagamento =====
-    btn.addEventListener('click', function(e) {
+    btn.addEventListener('click', async function(e) {
         e.preventDefault();
 
         console.log('Formulário submetido!'); // Debug
@@ -60,15 +61,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // ===== Salva localmente (backup, funciona mesmo sem internet/backend) =====
         salvarLocal(dados);
 
-        // ===== Cria a conta do aluno no Supabase (fica bloqueada até liberarmos o acesso) =====
+        // ===== Cria a conta do aluno no Supabase e matricula no curso desta página =====
         if (typeof supabaseClient !== 'undefined') {
-            supabaseClient.auth.signUp({
-                email: email,
-                password: senha,
-                options: { data: { nome: nome, telefone: telefone, cargo: cargo } }
-            }).then(function(res) {
-                if (res.error) console.warn('Erro ao criar conta no Supabase (não crítico):', res.error.message);
-            });
+            await matricularAlunoNoCurso(email, senha, nome, telefone, cargo);
         }
 
         // ===== Salva no Netlify Forms (funciona quando publicado no Netlify) =====
@@ -151,6 +146,56 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// ===== Cria/loga o aluno no Supabase e cria a matrícula (não liberada) no curso desta página =====
+async function matricularAlunoNoCurso(email, senha, nome, telefone, cargo) {
+    let session = null;
+
+    const signUpRes = await supabaseClient.auth.signUp({
+        email: email,
+        password: senha,
+        options: { data: { nome: nome, telefone: telefone, cargo: cargo } }
+    });
+
+    if (!signUpRes.error) {
+        session = signUpRes.data.session;
+    } else if (signUpRes.error.message.toLowerCase().includes('already registered')) {
+        // Aluno já tem conta (ex.: comprou outro curso antes) — tenta logar com a senha informada
+        const signInRes = await supabaseClient.auth.signInWithPassword({ email: email, password: senha });
+        if (signInRes.error) {
+            console.warn('E-mail já cadastrado com outra senha. Peça para o aluno usar a tela de login.');
+            return;
+        }
+        session = signInRes.data.session;
+    } else {
+        console.warn('Erro ao criar conta no Supabase (não crítico):', signUpRes.error.message);
+        return;
+    }
+
+    if (!session) return;
+
+    const { data: curso, error: erroCurso } = await supabaseClient
+        .from('cursos')
+        .select('id')
+        .eq('slug', CONFIG.CURSO_SLUG)
+        .single();
+
+    if (erroCurso || !curso) {
+        console.warn('Curso não encontrado para o slug "' + CONFIG.CURSO_SLUG + '" (não crítico):', erroCurso);
+        return;
+    }
+
+    const { error: erroMatricula } = await supabaseClient
+        .from('matriculas')
+        .upsert(
+            { aluno_id: session.user.id, curso_id: curso.id },
+            { onConflict: 'aluno_id,curso_id', ignoreDuplicates: true }
+        );
+
+    if (erroMatricula) {
+        console.warn('Erro ao criar matrícula (não crítico):', erroMatricula.message);
+    }
+}
 
 // ===== Salva a inscrição no localStorage (backup local) =====
 function salvarLocal(dados) {
