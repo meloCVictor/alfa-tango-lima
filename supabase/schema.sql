@@ -76,8 +76,11 @@ create table if not exists public.modulos (
     titulo text not null,
     descricao text,
     link text not null,
+    material_link text,
     ordem int not null default 0
 );
+
+alter table public.modulos add column if not exists material_link text;
 
 -- Curso ao qual cada módulo pertence
 create table if not exists public.cursos (
@@ -144,6 +147,55 @@ create policy "modulos_select_matriculado" on public.modulos
 drop policy if exists "modulos_select_admin" on public.modulos;
 create policy "modulos_select_admin" on public.modulos
     for select using (public.is_admin());
+
+-- Função auxiliar: o usuário logado tem matrícula liberada no curso do módulo informado?
+create or replace function public.tem_acesso_modulo(modulo_id_param int)
+returns boolean
+language sql
+security definer
+set search_path = public
+as $$
+    select exists (
+        select 1
+        from public.modulos m
+        join public.matriculas mt on mt.curso_id = m.curso_id
+        where m.id = modulo_id_param
+        and mt.aluno_id = auth.uid()
+        and mt.liberado = true
+    );
+$$;
+
+-- Perguntas dos alunos em cada aula (fórum simples, com resposta do professor)
+create table if not exists public.perguntas (
+    id serial primary key,
+    modulo_id int not null references public.modulos (id) on delete cascade,
+    aluno_id uuid not null references public.profiles (id) on delete cascade,
+    pergunta text not null,
+    resposta text,
+    respondido_em timestamptz,
+    created_at timestamptz not null default now()
+);
+
+alter table public.perguntas enable row level security;
+
+-- Alunos com acesso ao módulo veem todas as perguntas dele (fórum da turma)
+drop policy if exists "perguntas_select_matriculado" on public.perguntas;
+create policy "perguntas_select_matriculado" on public.perguntas
+    for select using (public.tem_acesso_modulo(modulo_id));
+
+-- Só pode perguntar quem tem acesso liberado ao módulo, e a pergunta é sempre em nome de quem está logado
+drop policy if exists "perguntas_insert_matriculado" on public.perguntas;
+create policy "perguntas_insert_matriculado" on public.perguntas
+    for insert with check (auth.uid() = aluno_id and public.tem_acesso_modulo(modulo_id));
+
+-- Admin vê e responde qualquer pergunta
+drop policy if exists "perguntas_select_admin" on public.perguntas;
+create policy "perguntas_select_admin" on public.perguntas
+    for select using (public.is_admin());
+
+drop policy if exists "perguntas_update_admin" on public.perguntas;
+create policy "perguntas_update_admin" on public.perguntas
+    for update using (public.is_admin());
 
 -- Cadastre seus cursos (o slug é usado no js/form-handler.js de cada landing page):
 -- insert into public.cursos (nome, slug) values

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Curso Alvorada</title>
+    <title>Perguntas dos alunos - Curso Alvorada</title>
     <meta name="robots" content="noindex">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
@@ -15,43 +15,39 @@
 <body>
     <header style="background: white; border-bottom: 3px solid var(--verde-principal); padding: 14px 0;">
         <div class="container flex items-center justify-between">
-            <div style="font-weight: 800; color: var(--verde-principal); font-size: 1.05rem;">ADMIN · CURSO ALVORADA</div>
+            <div style="font-weight: 800; color: var(--verde-principal); font-size: 1.05rem;">ADMIN · PERGUNTAS</div>
             <div class="flex items-center" style="gap: 16px;">
-                <a href="admin-perguntas.html" style="color: var(--verde-principal); font-weight: 600; text-decoration: none; font-size: 0.9rem;">Perguntas dos alunos</a>
+                <a href="admin.html" style="color: var(--verde-principal); font-weight: 600; text-decoration: none; font-size: 0.9rem;">← Alunos</a>
                 <button type="button" id="btn-sair" style="background: none; border: 1px solid var(--verde-principal); color: var(--verde-principal); font-weight: 600; padding: 8px 16px; border-radius: 8px; cursor: pointer;">Sair</button>
             </div>
         </div>
     </header>
 
-    <div class="container" style="max-width: 1000px; padding-top: 40px; padding-bottom: 60px;">
+    <div class="container" style="max-width: 900px; padding-top: 40px; padding-bottom: 60px;">
         <div id="carregando" style="text-align: center; padding: 60px 0; color: var(--cinza-claro);">Carregando...</div>
 
         <div id="sem-permissao" style="display: none; text-align: center; padding: 60px 0;">
             <div style="font-size: 2.5rem; margin-bottom: 12px;">🔒</div>
             <h2 style="color: var(--verde-escuro);">Acesso restrito</h2>
-            <p style="color: var(--cinza-claro);">Esta conta não tem permissão de administrador.</p>
         </div>
 
         <div id="painel" style="display: none;">
-            <h1 style="font-size: 1.5rem; color: var(--verde-escuro); margin-bottom: 8px;">Alunos inscritos</h1>
-            <p style="color: var(--cinza-claro); font-size: 0.9rem; margin-bottom: 16px;">
-                Confira o comprovante do PIX no WhatsApp e clique em "Liberar acesso" para conceder acesso ao curso.
-            </p>
+            <h1 style="font-size: 1.5rem; color: var(--verde-escuro); margin-bottom: 8px;">Perguntas dos alunos</h1>
 
             <div style="margin-bottom: 20px;">
-                <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--verde-escuro); margin-bottom: 6px;">Filtrar por curso</label>
-                <select id="filtro-curso" class="form-input" style="max-width: 320px;">
-                    <option value="">Todos os cursos</option>
-                </select>
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--verde-escuro);">
+                    <input type="checkbox" id="filtro-nao-respondidas" checked>
+                    Mostrar só as não respondidas
+                </label>
             </div>
 
-            <div id="lista-alunos" style="display: flex; flex-direction: column; gap: 12px;"></div>
+            <div id="lista-perguntas" style="display: flex; flex-direction: column; gap: 16px;"></div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-config.js"></script>
-    <script src="js/admin.js"></script>
+    <script src="js/admin-perguntas.js"></script>
 </body>
 
 </html>
