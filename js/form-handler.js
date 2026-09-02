@@ -176,7 +176,7 @@ async function matricularAlunoNoCurso(email, senha, nome, telefone, cargo) {
 
     const { data: curso, error: erroCurso } = await supabaseClient
         .from('cursos')
-        .select('id')
+        .select('id, nome')
         .eq('slug', CONFIG.CURSO_SLUG)
         .single();
 
@@ -194,6 +194,18 @@ async function matricularAlunoNoCurso(email, senha, nome, telefone, cargo) {
 
     if (erroMatricula) {
         console.warn('Erro ao criar matrícula (não crítico):', erroMatricula.message);
+        return;
+    }
+
+    if (typeof enviarEmail === 'function') {
+        enviarEmail(
+            email,
+            'Recebemos sua inscrição no ' + curso.nome,
+            '<p>Olá, ' + nome + '!</p>' +
+            '<p>Recebemos sua inscrição no <strong>' + curso.nome + '</strong>. Assim que confirmarmos o pagamento do PIX, ' +
+            'seu acesso será liberado e você poderá entrar com o e-mail e a senha que você cadastrou.</p>' +
+            '<p>Qualquer dúvida, é só chamar no WhatsApp.</p>'
+        );
     }
 }
 

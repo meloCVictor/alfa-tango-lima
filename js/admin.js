@@ -106,11 +106,12 @@ async function carregarAlunos() {
         btn.style.cssText = 'padding: 10px 18px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; color: white; flex-shrink: 0; background: ' +
             (matricula.liberado ? 'var(--vermelho-urgencia)' : 'var(--verde-principal)') + ';';
         btn.addEventListener('click', async function () {
+            const vaiLiberar = !matricula.liberado;
             btn.disabled = true;
             btn.textContent = 'Salvando...';
             const { error: erroUpdate } = await supabaseClient
                 .from('matriculas')
-                .update({ liberado: !matricula.liberado })
+                .update({ liberado: vaiLiberar })
                 .eq('id', matricula.id);
 
             if (erroUpdate) {
@@ -119,6 +120,18 @@ async function carregarAlunos() {
                 btn.textContent = matricula.liberado ? 'Revogar acesso' : 'Liberar acesso';
                 return;
             }
+
+            if (vaiLiberar && aluno.email && typeof enviarEmail === 'function') {
+                enviarEmail(
+                    aluno.email,
+                    'Seu acesso ao ' + (curso.nome || 'curso') + ' foi liberado!',
+                    '<p>Olá, ' + (aluno.nome || 'aluno(a)') + '!</p>' +
+                    '<p>Seu pagamento foi confirmado e o acesso ao <strong>' + (curso.nome || 'curso') + '</strong> já está liberado.</p>' +
+                    '<p>Entre com o e-mail e a senha que você cadastrou em: ' +
+                    '<a href="https://oprofvictor.netlify.app/login.html">https://oprofvictor.netlify.app/login.html</a></p>'
+                );
+            }
+
             await carregarAlunos();
         });
 
