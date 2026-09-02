@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar - Curso Alvorada</title>
+    <meta name="robots" content="noindex">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+
+<body>
+    <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--verde-bg); padding: 20px;">
+        <div style="background: white; border-radius: 16px; padding: 40px; max-width: 420px; width: 100%; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+            <h1 style="font-size: 1.5rem; color: var(--verde-escuro); margin-bottom: 8px; text-align: center;">Área do Aluno</h1>
+            <p style="color: var(--cinza-claro); font-size: 0.9rem; margin-bottom: 24px; text-align: center;">
+                Entre com o e-mail e a senha cadastrados na inscrição.
+            </p>
+
+            <div id="login-erro" style="display: none; background: #fdecea; color: var(--vermelho-urgencia); padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 16px;"></div>
+
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--verde-escuro); margin-bottom: 6px;">E-mail</label>
+                <input type="email" id="login-email" class="form-input" placeholder="seu.email@gmail.com">
+            </div>
+
+            <div style="margin-bottom: 24px;">
+                <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--verde-escuro); margin-bottom: 6px;">Senha</label>
+                <input type="password" id="login-senha" class="form-input" placeholder="Sua senha">
+            </div>
+
+            <button type="button" id="btn-login" class="btn-cta" style="width: 100%; font-size: 1.05rem;">ENTRAR</button>
+
+            <p style="font-size: 0.85rem; color: var(--cinza-claro); text-align: center; margin-top: 20px;">
+                Ainda não se inscreveu? <a href="index.html#inscricao" style="color: var(--verde-principal); font-weight: 600;">Garanta seu acesso</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/login.js"></script>
+</body>
+
+</html>

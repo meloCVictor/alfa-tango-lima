@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Aluno - Curso Alvorada</title>
+    <meta name="robots" content="noindex">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+
+<body>
+    <header style="background: white; border-bottom: 3px solid var(--verde-principal); padding: 14px 0;">
+        <div class="container flex items-center justify-between">
+            <div style="font-weight: 800; color: var(--verde-principal); font-size: 1.05rem;">CURSO ALVORADA</div>
+            <button type="button" id="btn-sair" style="background: none; border: 1px solid var(--verde-principal); color: var(--verde-principal); font-weight: 600; padding: 8px 16px; border-radius: 8px; cursor: pointer;">Sair</button>
+        </div>
+    </header>
+
+    <div class="container" style="max-width: 800px; padding-top: 40px; padding-bottom: 60px;">
+        <div id="carregando" style="text-align: center; padding: 60px 0; color: var(--cinza-claro);">Carregando...</div>
+
+        <!-- Exibido enquanto o pagamento ainda não foi confirmado -->
+        <div id="aguardando" style="display: none; background: #fff8e1; border-radius: 12px; padding: 32px; text-align: center;">
+            <div style="font-size: 2.5rem; margin-bottom: 12px;">⏳</div>
+            <h2 style="color: var(--verde-escuro); margin-bottom: 8px;">Estamos confirmando seu pagamento</h2>
+            <p style="color: var(--cinza-claro);">Assim que o comprovante do PIX for validado, seus módulos aparecem
+                aqui automaticamente. Ainda não enviou o comprovante?</p>
+            <a id="link-whatsapp-aguardando" href="#" target="_blank"
+                style="display: inline-block; margin-top: 16px; background: #25D366; color: white; font-weight: 700; padding: 12px 24px; border-radius: 10px; text-decoration: none;">
+                📱 Enviar comprovante no WhatsApp
+            </a>
+        </div>
+
+        <!-- Exibido quando o acesso já foi liberado -->
+        <div id="liberado" style="display: none;">
+            <h1 id="saudacao" style="font-size: 1.6rem; color: var(--verde-escuro); margin-bottom: 24px;"></h1>
+            <div id="lista-modulos" style="display: flex; flex-direction: column; gap: 16px;"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/area-do-aluno.js"></script>
+</body>
+
+</html>

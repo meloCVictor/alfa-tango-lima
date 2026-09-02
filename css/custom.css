@@ -1,0 +1,382 @@
+:root {
+    /* Paleta institucional Alvorada */
+    --verde-principal: #1a6b3c;
+    --verde-escuro: #0d4a28;
+    --verde-claro: #e8f5ed;
+    --verde-medio: #2d8a4f;
+    --verde-bg: #f0f9f3;
+    --branco: #ffffff;
+    --cinza-texto: #333333;
+    --cinza-claro: #666666;
+    --cinza-bg: #f7f7f7;
+    --amarelo-destaque: #ffc107;
+    --vermelho-urgencia: #dc3545;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--cinza-texto);
+    background: var(--branco);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Tipografia institucional */
+h1, h2, h3 {
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.text-verde { color: var(--verde-principal); }
+.bg-verde { background: var(--verde-principal); }
+.bg-verde-claro { background: var(--verde-claro); }
+
+/* Botão principal */
+.btn-cta {
+    display: inline-block;
+    background: var(--verde-principal);
+    color: white;
+    font-weight: 800;
+    font-size: 1.15rem;
+    padding: 16px 40px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(26, 107, 60, 0.3);
+}
+
+.btn-cta:hover {
+    background: var(--verde-escuro);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26, 107, 60, 0.4);
+}
+
+/* Barra de urgência */
+.barra-urgencia {
+    background: var(--vermelho-urgencia);
+    color: white;
+    text-align: center;
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+/* Cards institucionais */
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid #e9ecef;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/* Silhueta rodapé */
+.silhueta-footer {
+    background: var(--verde-claro);
+    height: 80px;
+    background-image: url('../images/silhueta-cidade.svg');
+    background-repeat: repeat-x;
+    background-position: bottom;
+    background-size: contain;
+}
+
+/* Formulário */
+.form-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    font-family: inherit;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--verde-principal);
+    box-shadow: 0 0 0 3px rgba(26, 107, 60, 0.1);
+}
+
+/* QR Code PIX */
+.pix-box {
+    background: var(--verde-claro);
+    border: 2px dashed var(--verde-medio);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+}
+
+.pix-codigo {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    word-break: break-all;
+    margin: 12px 0;
+    color: var(--verde-escuro);
+}
+
+/* Badge institucional */
+.badge-institucional {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--verde-claro);
+    color: var(--verde-principal);
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Countdown */
+.countdown-box {
+    display: inline-block;
+    background: var(--verde-escuro);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 0.95rem;
+}
+
+/* Accordion FAQ */
+.faq-item {
+    background: var(--verde-bg);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.faq-item summary {
+    padding: 18px 22px;
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.faq-item summary::-webkit-details-marker { display: none; }
+
+.faq-item[open] summary {
+    background: var(--verde-principal);
+    color: white;
+}
+
+.faq-item p {
+    padding: 16px 22px;
+    color: var(--cinza-claro);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .hero-grid { grid-template-columns: 1fr !important; }
+    .oferta-grid { grid-template-columns: 1fr !important; }
+    h1 { font-size: 1.8rem !important; }
+    h2 { font-size: 1.5rem !important; }
+}
+
+/* ========================================
+   RESPONSIVIDADE MOBILE
+   ======================================== */
+
+/* Tablets e celulares — até 768px */
+@media (max-width: 768px) {
+
+    /* Força todas as grids para 1 coluna */
+    .grid.grid-cols-2,
+    .grid.grid-cols-3 {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Grid de 4 colunas vira 2x2 */
+    .grid.grid-cols-4 {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px !important;
+    }
+
+    /* Hero grid */
+    .hero-grid {
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
+    }
+
+    /* Oferta grid — empilha formulário embaixo do card */
+    .oferta-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Tipografia responsiva */
+    h1 {
+        font-size: 1.6rem !important;
+    }
+
+    h2 {
+        font-size: 1.35rem !important;
+    }
+
+    h3 {
+        font-size: 1.05rem !important;
+    }
+
+    /* Reduz padding das seções */
+    section {
+        padding: 40px 0 !important;
+    }
+
+    /* Container com menos padding lateral */
+    .container {
+        padding: 0 16px;
+    }
+
+    /* Barra de urgência — texto menor */
+    .barra-urgencia {
+        font-size: 0.75rem !important;
+        padding: 6px 10px !important;
+        line-height: 1.4;
+    }
+
+    /* Countdown menor no mobile */
+    .countdown-box {
+        font-size: 0.7rem !important;
+        padding: 2px 6px !important;
+    }
+
+    /* Botão do header — menor no mobile */
+    .header-btn {
+        font-size: 0.8rem !important;
+        padding: 8px 16px !important;
+    }
+
+    /* Hero — imagem não estoura */
+    .hero-grid img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    /* Badge flutuante do hero — reposiciona */
+    .hero-grid .absolute,
+    [style*="position: absolute"] {
+        position: relative !important;
+        transform: none !important;
+        left: auto !important;
+        bottom: auto !important;
+        margin-top: 16px;
+    }
+
+    /* Cards — menos padding */
+    .card {
+        padding: 20px !important;
+    }
+
+    /* Oferta card — lado verde e lado branco empilhados */
+    .oferta-grid > div:first-child {
+        padding: 28px 20px !important;
+    }
+
+    .oferta-grid > div:last-child {
+        padding: 28px 20px !important;
+    }
+
+    /* Preço grande não estoura */
+    .oferta-grid > div:first-child div[style*="font-size: 3rem"] {
+        font-size: 2.2rem !important;
+    }
+
+    /* Autoridade — imagem centraliza */
+    .grid.grid-cols-3 img {
+        width: 140px !important;
+        height: 140px !important;
+        margin: 0 auto 16px !important;
+    }
+
+    /* Info do edital — números menores */
+    .grid.grid-cols-4 > div > div:last-child {
+        font-size: 1rem !important;
+    }
+
+    .grid.grid-cols-4 > div > div:first-child {
+        font-size: 0.65rem !important;
+    }
+
+    /* Footer — colunas empilhadas */
+    footer .grid {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+        text-align: center;
+    }
+
+    /* Modal PIX — ocupa tela toda no mobile */
+    #modal-pix > div {
+        max-width: 100% !important;
+        width: calc(100% - 20px) !important;
+        padding: 20px !important;
+        max-height: 95vh !important;
+        overflow-y: auto !important;
+    }
+
+    /* QR Code menor no mobile */
+    #qr-code {
+        width: 160px !important;
+        height: 160px !important;
+    }
+
+    /* Flex da prova social — quebra em coluna */
+    .hero-grid .flex {
+        flex-wrap: wrap !important;
+        gap: 16px !important;
+    }
+
+    .hero-grid .flex > div {
+        flex: 1 1 30% !important;
+        min-width: 80px;
+    }
+
+    .hero-grid .flex > div > div:first-child {
+        font-size: 1.3rem !important;
+    }
+}
+
+/* Celulares pequenos — até 380px */
+@media (max-width: 380px) {
+    h1 {
+        font-size: 1.4rem !important;
+    }
+
+    .barra-urgencia {
+        font-size: 0.68rem !important;
+    }
+
+    .header-btn {
+        font-size: 0.72rem !important;
+        padding: 6px 12px !important;
+    }
+
+    /* Grid de 4 vira 1 coluna em telas muito pequenas */
+    .grid.grid-cols-4 {
+        grid-template-columns: 1fr !important;
+    }
+}
