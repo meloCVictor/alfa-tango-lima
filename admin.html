@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Curso Alvorada</title>
+    <meta name="robots" content="noindex">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+
+<body>
+    <header style="background: white; border-bottom: 3px solid var(--verde-principal); padding: 14px 0;">
+        <div class="container flex items-center justify-between">
+            <div style="font-weight: 800; color: var(--verde-principal); font-size: 1.05rem;">ADMIN · CURSO ALVORADA</div>
+            <button type="button" id="btn-sair" style="background: none; border: 1px solid var(--verde-principal); color: var(--verde-principal); font-weight: 600; padding: 8px 16px; border-radius: 8px; cursor: pointer;">Sair</button>
+        </div>
+    </header>
+
+    <div class="container" style="max-width: 1000px; padding-top: 40px; padding-bottom: 60px;">
+        <div id="carregando" style="text-align: center; padding: 60px 0; color: var(--cinza-claro);">Carregando...</div>
+
+        <div id="sem-permissao" style="display: none; text-align: center; padding: 60px 0;">
+            <div style="font-size: 2.5rem; margin-bottom: 12px;">🔒</div>
+            <h2 style="color: var(--verde-escuro);">Acesso restrito</h2>
+            <p style="color: var(--cinza-claro);">Esta conta não tem permissão de administrador.</p>
+        </div>
+
+        <div id="painel" style="display: none;">
+            <h1 style="font-size: 1.5rem; color: var(--verde-escuro); margin-bottom: 8px;">Alunos inscritos</h1>
+            <p style="color: var(--cinza-claro); font-size: 0.9rem; margin-bottom: 24px;">
+                Confira o comprovante do PIX no WhatsApp e clique em "Liberar acesso" para conceder acesso ao curso.
+            </p>
+
+            <div id="lista-alunos" style="display: flex; flex-direction: column; gap: 12px;"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+
+</html>
