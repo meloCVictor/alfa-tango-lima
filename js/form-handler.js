@@ -62,8 +62,28 @@ document.addEventListener('DOMContentLoaded', function() {
         salvarLocal(dados);
 
         // ===== Cria a conta do aluno no Supabase e matricula no curso desta página =====
+        let resultadoMatricula = { status: 'erro' };
         if (typeof supabaseClient !== 'undefined') {
-            await matricularAlunoNoCurso(email, senha, nome, telefone, cargo);
+            resultadoMatricula = await matricularAlunoNoCurso(email, senha, nome, telefone, cargo);
+        }
+
+        // Interrompe o fluxo se não conseguimos autenticar ou o aluno já tem acesso liberado
+        if (resultadoMatricula.status === 'senha_invalida') {
+            alert('Este e-mail já possui uma conta, mas a senha informada não confere.\n\nSe você já se cadastrou antes, use a tela de login em vez de preencher o formulário de novo.');
+            btn.textContent = textoOriginal;
+            btn.disabled = false;
+            return;
+        }
+        if (resultadoMatricula.status === 'ja_liberado') {
+            alert('Você já tem acesso liberado a este curso! Faça login para assistir às aulas.');
+            window.location.href = 'login.html';
+            return;
+        }
+        if (resultadoMatricula.status === 'erro') {
+            alert('Não foi possível concluir o cadastro agora. Tente novamente ou fale com a gente no WhatsApp.');
+            btn.textContent = textoOriginal;
+            btn.disabled = false;
+            return;
         }
 
         // ===== Salva no Netlify Forms (funciona quando publicado no Netlify) =====
@@ -97,7 +117,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // ===== Gera o PIX e abre o modal =====
         try {
             // Gera código PIX
-            const pixCode = gerarPixCopiaCola();
+            const pixCode = gerarPixCopiaCola({
+                chave: CONFIG.PIX_CHAVE,
+                nome: CONFIG.PIX_NOME,
+                cidade: CONFIG.PIX_CIDADE,
+                valor: CONFIG.VALOR
+            });
             document.getElementById('pix-codigo').textContent = pixCode;
 
             // Gera QR Code
@@ -105,6 +130,15 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('qr-code').src = qrUrl;
 
             // Preenche resumo
+            const mensagensStatus = {
+                novo: '✅ Conta criada com sucesso!',
+                login: '👋 Você já tinha uma conta com esse e-mail — login efetuado.',
+                ja_matriculado: '⏳ Você já tinha se inscrito nesse curso. Segue o PIX novamente.'
+            };
+            const statusEl = document.getElementById('status-cadastro');
+            if (statusEl) {
+                statusEl.textContent = mensagensStatus[resultadoMatricula.status] || '';
+            }
             document.getElementById('resumo-cadastro').textContent = 
                 dados.nome + ' · ' + dados.email + ' · ' + dados.telefone;
             document.getElementById('email-confirmacao').textContent = dados.email;
@@ -148,8 +182,10 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ===== Cria/loga o aluno no Supabase e cria a matrícula (não liberada) no curso desta página =====
+// Retorna { status: 'novo' | 'login' | 'ja_matriculado' | 'ja_liberado' | 'senha_invalida' | 'erro', curso }
 async function matricularAlunoNoCurso(email, senha, nome, telefone, cargo) {
     let session = null;
+    let status = 'novo';
 
     const signUpRes = await supabaseClient.auth.signUp({
         email: email,
@@ -163,16 +199,16 @@ async function matricularAlunoNoCurso(email, senha, nome, telefone, cargo) {
         // Aluno já tem conta (ex.: comprou outro curso antes) — tenta logar com a senha informada
         const signInRes = await supabaseClient.auth.signInWithPassword({ email: email, password: senha });
         if (signInRes.error) {
-            console.warn('E-mail já cadastrado com outra senha. Peça para o aluno usar a tela de login.');
-            return;
+            return { status: 'senha_invalida' };
         }
         session = signInRes.data.session;
+        status = 'login';
     } else {
-        console.warn('Erro ao criar conta no Supabase (não crítico):', signUpRes.error.message);
-        return;
+        console.warn('Erro ao criar conta no Supabase:', signUpRes.error.message);
+        return { status: 'erro' };
     }
 
-    if (!session) return;
+    if (!session) return { status: 'erro' };
 
     const { data: curso, error: erroCurso } = await supabaseClient
         .from('cursos')
@@ -182,19 +218,28 @@ async function matricularAlunoNoCurso(email, senha, nome, telefone, cargo) {
 
     if (erroCurso || !curso) {
         console.warn('Curso não encontrado para o slug "' + CONFIG.CURSO_SLUG + '" (não crítico):', erroCurso);
-        return;
+        return { status: 'erro' };
+    }
+
+    // Verifica se já existe matrícula nesse curso antes de criar uma nova
+    const { data: matriculaExistente } = await supabaseClient
+        .from('matriculas')
+        .select('liberado')
+        .eq('aluno_id', session.user.id)
+        .eq('curso_id', curso.id)
+        .maybeSingle();
+
+    if (matriculaExistente) {
+        return { status: matriculaExistente.liberado ? 'ja_liberado' : 'ja_matriculado', curso: curso };
     }
 
     const { error: erroMatricula } = await supabaseClient
         .from('matriculas')
-        .upsert(
-            { aluno_id: session.user.id, curso_id: curso.id },
-            { onConflict: 'aluno_id,curso_id', ignoreDuplicates: true }
-        );
+        .insert({ aluno_id: session.user.id, curso_id: curso.id });
 
     if (erroMatricula) {
-        console.warn('Erro ao criar matrícula (não crítico):', erroMatricula.message);
-        return;
+        console.warn('Erro ao criar matrícula:', erroMatricula.message);
+        return { status: 'erro' };
     }
 
     if (typeof enviarEmail === 'function') {
@@ -207,7 +252,10 @@ async function matricularAlunoNoCurso(email, senha, nome, telefone, cargo) {
             '<p>Qualquer dúvida, é só chamar no WhatsApp.</p>'
         );
     }
+
+    return { status: status, curso: curso };
 }
+
 
 // ===== Salva a inscrição no localStorage (backup local) =====
 function salvarLocal(dados) {
@@ -237,47 +285,4 @@ function copiarPix() {
             btn.style.background = '';
         }, 2000);
     });
-}
-
-// ===== Gerar PIX (global) =====
-function gerarPixCopiaCola() {
-    const merchantAccountInfo =
-        '00' + '14' + 'br.gov.bcb.pix' +
-        '01' + String(CONFIG.PIX_CHAVE.length).padStart(2, '0') + CONFIG.PIX_CHAVE;
-
-    const valor = CONFIG.VALOR.toFixed(2);
-
-    // Campo 62: Reference Label (txid) — "***" indica que não há id de transação específico
-    const txid = '***';
-    const additionalData = '05' + String(txid.length).padStart(2, '0') + txid;
-
-    const payload =
-        '00' + '02' + '01' +
-        '26' + String(merchantAccountInfo.length).padStart(2, '0') + merchantAccountInfo +
-        '52' + '04' + '0000' +
-        '53' + '03' + '986' +
-        '54' + String(valor.length).padStart(2, '0') + valor +
-        '58' + '02' + 'BR' +
-        '59' + String(CONFIG.PIX_NOME.length).padStart(2, '0') + CONFIG.PIX_NOME +
-        '60' + String(CONFIG.PIX_CIDADE.length).padStart(2, '0') + CONFIG.PIX_CIDADE +
-        '62' + String(additionalData.length).padStart(2, '0') + additionalData;
-
-    const crc = calcularCRC16(payload + '6304');
-    return payload + '6304' + crc;
-}
-
-function calcularCRC16(str) {
-    let crc = 0xFFFF;
-    for (let i = 0; i < str.length; i++) {
-        crc ^= str.charCodeAt(i) << 8;
-        for (let j = 0; j < 8; j++) {
-            if (crc & 0x8000) {
-                crc = (crc << 1) ^ 0x1021;
-            } else {
-                crc <<= 1;
-            }
-            crc &= 0xFFFF;
-        }
-    }
-    return crc.toString(16).toUpperCase().padStart(4, '0');
 }

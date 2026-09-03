@@ -87,8 +87,19 @@ create table if not exists public.cursos (
     id serial primary key,
     nome text not null,
     slug text not null unique,
+    valor numeric(10,2),
+    pix_chave text,
+    pix_nome text,
+    pix_cidade text,
+    whatsapp_numero text,
     created_at timestamptz not null default now()
 );
+
+alter table public.cursos add column if not exists valor numeric(10,2);
+alter table public.cursos add column if not exists pix_chave text;
+alter table public.cursos add column if not exists pix_nome text;
+alter table public.cursos add column if not exists pix_cidade text;
+alter table public.cursos add column if not exists whatsapp_numero text;
 
 alter table public.modulos add column if not exists curso_id int references public.cursos (id);
 
@@ -98,6 +109,15 @@ alter table public.cursos enable row level security;
 drop policy if exists "cursos_select_authenticated" on public.cursos;
 create policy "cursos_select_authenticated" on public.cursos
     for select using (auth.role() = 'authenticated');
+
+-- Admin pode criar/editar cursos (preço, chave PIX etc.)
+drop policy if exists "cursos_insert_admin" on public.cursos;
+create policy "cursos_insert_admin" on public.cursos
+    for insert with check (public.is_admin());
+
+drop policy if exists "cursos_update_admin" on public.cursos;
+create policy "cursos_update_admin" on public.cursos
+    for update using (public.is_admin());
 
 -- Matrícula: liga um aluno a um curso específico e controla a liberação daquele curso
 create table if not exists public.matriculas (
@@ -201,6 +221,16 @@ create policy "perguntas_update_admin" on public.perguntas
 -- insert into public.cursos (nome, slug) values
 --   ('Curso Alvorada - Legalle', 'alvorada'),
 --   ('Novo Curso', 'novo-curso');
+
+-- Preencha o preço e os dados de PIX de cada curso (necessário para o aluno conseguir
+-- comprar um novo curso direto pela área do aluno):
+-- update public.cursos set
+--   valor = 29.90,
+--   pix_chave = '+5549999191709',
+--   pix_nome = 'VICTOR COSTA MELO',
+--   pix_cidade = 'ALVORADA',
+--   whatsapp_numero = '5549999191709'
+-- where slug = 'alvorada';
 
 -- Depois associe cada módulo ao curso correto:
 -- update public.modulos set curso_id = (select id from public.cursos where slug = 'alvorada') where id = 1;

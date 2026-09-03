@@ -27,27 +27,48 @@
     <div class="container" style="max-width: 800px; padding-top: 40px; padding-bottom: 60px;">
         <div id="carregando" style="text-align: center; padding: 60px 0; color: var(--cinza-claro);">Carregando...</div>
 
-        <!-- Exibido enquanto o pagamento ainda não foi confirmado -->
-        <div id="aguardando" style="display: none; background: #fff8e1; border-radius: 12px; padding: 32px; text-align: center;">
-            <div style="font-size: 2.5rem; margin-bottom: 12px;">⏳</div>
-            <h2 style="color: var(--verde-escuro); margin-bottom: 8px;">Estamos confirmando seu pagamento</h2>
-            <p style="color: var(--cinza-claro);">Assim que o comprovante do PIX for validado, seus módulos aparecem
-                aqui automaticamente. Ainda não enviou o comprovante?</p>
-            <a id="link-whatsapp-aguardando" href="#" target="_blank"
-                style="display: inline-block; margin-top: 16px; background: #25D366; color: white; font-weight: 700; padding: 12px 24px; border-radius: 10px; text-decoration: none;">
-                📱 Enviar comprovante no WhatsApp
-            </a>
-        </div>
-
-        <!-- Exibido quando o acesso já foi liberado -->
-        <div id="liberado" style="display: none;">
+        <div id="catalogo" style="display: none;">
             <h1 id="saudacao" style="font-size: 1.6rem; color: var(--verde-escuro); margin-bottom: 24px;"></h1>
-            <div id="lista-modulos" style="display: flex; flex-direction: column; gap: 16px;"></div>
+            <div id="lista-cursos" style="display: flex; flex-direction: column; gap: 16px;"></div>
+        </div>
+    </div>
+
+    <!-- Modal de compra/pagamento de um curso (usado quando o aluno compra outro curso direto por aqui) -->
+    <div id="modal-pix-compra"
+        style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 9999; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: white; border-radius: 16px; max-width: 480px; width: 100%; padding: 32px; text-align: center; max-height: 90vh; overflow-y: auto;">
+            <button onclick="document.getElementById('modal-pix-compra').style.display='none'"
+                style="float: right; background: none; border: none; font-size: 1.5rem; color: #999; cursor: pointer;">×</button>
+
+            <h3 id="titulo-modal-compra" style="font-size: 1.4rem; color: var(--verde-escuro); margin-bottom: 8px;">Pague via PIX</h3>
+            <p style="color: var(--cinza-claro); font-size: 0.9rem; margin-bottom: 24px;">
+                Escaneie o QR Code abaixo ou copie o código PIX. Seu acesso será liberado após a confirmação.
+            </p>
+
+            <div class="pix-box" style="margin-bottom: 20px;">
+                <img id="qr-code-compra" src="" alt="QR Code PIX" style="width: 200px; height: 200px; margin: 0 auto;">
+                <p style="font-size: 0.8rem; color: var(--cinza-claro); margin-top: 8px;">Escaneie com o app do seu banco</p>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--verde-escuro); margin-bottom: 6px;">Ou copie o código PIX:</label>
+                <div class="pix-codigo" id="pix-codigo-compra"></div>
+                <button onclick="copiarPixCompra()"
+                    style="background: var(--verde-principal); color: white; border: none; padding: 8px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; margin-top: 8px; font-size: 0.9rem;">
+                    📋 COPIAR CÓDIGO
+                </button>
+            </div>
+
+            <a id="btn-whatsapp-compra" href="#" target="_blank"
+                style="display: block; background: #25D366; color: white; font-weight: 700; padding: 14px; border-radius: 10px; text-decoration: none; font-size: 0.95rem; margin-top: 8px;">
+                📱 ENVIAR COMPROVANTE NO WHATSAPP
+            </a>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-config.js"></script>
+    <script src="js/pix.js"></script>
     <script src="js/nav.js"></script>
     <script src="js/area-do-aluno.js"></script>
 </body>
