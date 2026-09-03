@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     const { data: perfil, error: erroPerfil } = await supabaseClient
         .from('profiles')
-        .select('is_admin')
+        .select('nome, is_admin')
         .eq('id', session.user.id)
         .single();
 
@@ -23,6 +23,9 @@ document.addEventListener('DOMContentLoaded', async function () {
         document.getElementById('sem-permissao').style.display = 'block';
         return;
     }
+
+    const nomeEl = document.getElementById('nome-usuario-logado');
+    if (nomeEl) nomeEl.textContent = perfil.nome || session.user.email;
 
     document.getElementById('painel').style.display = 'block';
 

@@ -14,9 +14,13 @@
 
 <body>
     <header style="background: white; border-bottom: 3px solid var(--verde-principal); padding: 14px 0;">
-        <div class="container flex items-center justify-between">
-            <div style="font-weight: 800; color: var(--verde-principal); font-size: 1.05rem;">CURSO ALVORADA</div>
-            <button type="button" id="btn-sair" style="background: none; border: 1px solid var(--verde-principal); color: var(--verde-principal); font-weight: 600; padding: 8px 16px; border-radius: 8px; cursor: pointer;">Sair</button>
+        <div class="container flex items-center justify-between" style="flex-wrap: wrap; gap: 10px;">
+            <a href="index.html" style="font-weight: 800; color: var(--verde-principal); font-size: 1.05rem; text-decoration: none;">CURSO ALVORADA</a>
+            <button type="button" class="nav-toggle" data-target="nav-aluno" aria-label="Abrir menu">☰</button>
+            <nav class="nav-links" id="nav-aluno">
+                <span id="nome-usuario-logado" style="color: var(--cinza-claro); font-size: 0.9rem;"></span>
+                <button type="button" id="btn-sair" style="background: none; border: 1px solid var(--verde-principal); color: var(--verde-principal); font-weight: 600; padding: 8px 16px; border-radius: 8px; cursor: pointer;">Sair</button>
+            </nav>
         </div>
     </header>
 
@@ -44,6 +48,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-config.js"></script>
+    <script src="js/nav.js"></script>
     <script src="js/area-do-aluno.js"></script>
 </body>
 

@@ -26,6 +26,9 @@ document.addEventListener('DOMContentLoaded', async function () {
         .eq('id', session.user.id)
         .single();
 
+    const nomeEl = document.getElementById('nome-usuario-logado');
+    if (nomeEl) nomeEl.textContent = perfil && perfil.nome ? perfil.nome : session.user.email;
+
     const { data: matriculas, error: erroMatriculas } = await supabaseClient
         .from('matriculas')
         .select('liberado, cursos(id, nome)')

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perguntas dos alunos - Curso Alvorada</title>
+    <title>Usuários da plataforma - Curso Alvorada</title>
     <meta name="robots" content="noindex">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
@@ -15,12 +15,12 @@
 <body>
     <header style="background: white; border-bottom: 3px solid var(--verde-principal); padding: 14px 0;">
         <div class="container flex items-center justify-between" style="flex-wrap: wrap; gap: 10px;">
-            <a href="index.html" style="font-weight: 800; color: var(--verde-principal); font-size: 1.05rem; text-decoration: none;">ADMIN · PERGUNTAS</a>
-            <button type="button" class="nav-toggle" data-target="nav-admin-perguntas" aria-label="Abrir menu">☰</button>
-            <nav class="nav-links" id="nav-admin-perguntas">
+            <a href="index.html" style="font-weight: 800; color: var(--verde-principal); font-size: 1.05rem; text-decoration: none;">ADMIN · USUÁRIOS</a>
+            <button type="button" class="nav-toggle" data-target="nav-admin-usuarios" aria-label="Abrir menu">☰</button>
+            <nav class="nav-links" id="nav-admin-usuarios">
                 <span id="nome-usuario-logado" style="color: var(--cinza-claro); font-size: 0.9rem;"></span>
                 <a href="admin.html" style="color: var(--verde-principal); font-weight: 600; text-decoration: none; font-size: 0.9rem;">Alunos</a>
-                <a href="admin-usuarios.html" style="color: var(--verde-principal); font-weight: 600; text-decoration: none; font-size: 0.9rem;">Usuários</a>
+                <a href="admin-perguntas.html" style="color: var(--verde-principal); font-weight: 600; text-decoration: none; font-size: 0.9rem;">Perguntas</a>
                 <button type="button" id="btn-sair" style="background: none; border: 1px solid var(--verde-principal); color: var(--verde-principal); font-weight: 600; padding: 8px 16px; border-radius: 8px; cursor: pointer;">Sair</button>
             </nav>
         </div>
@@ -35,23 +35,21 @@
         </div>
 
         <div id="painel" style="display: none;">
-            <h1 style="font-size: 1.5rem; color: var(--verde-escuro); margin-bottom: 8px;">Perguntas dos alunos</h1>
+            <h1 style="font-size: 1.5rem; color: var(--verde-escuro); margin-bottom: 8px;">Usuários da plataforma</h1>
+            <p style="color: var(--cinza-claro); font-size: 0.9rem; margin-bottom: 20px;">
+                Todas as pessoas cadastradas (em qualquer curso). Use com cuidado a opção de tornar alguém administrador.
+            </p>
 
-            <div style="margin-bottom: 20px;">
-                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--verde-escuro);">
-                    <input type="checkbox" id="filtro-nao-respondidas" checked>
-                    Mostrar só as não respondidas
-                </label>
-            </div>
+            <input type="text" id="busca-usuario" class="form-input" placeholder="Buscar por nome ou e-mail..." style="max-width: 360px; margin-bottom: 20px;">
 
-            <div id="lista-perguntas" style="display: flex; flex-direction: column; gap: 16px;"></div>
+            <div id="lista-usuarios" style="display: flex; flex-direction: column; gap: 12px;"></div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-config.js"></script>
     <script src="js/nav.js"></script>
-    <script src="js/admin-perguntas.js"></script>
+    <script src="js/admin-usuarios.js"></script>
 </body>
 
 </html>
