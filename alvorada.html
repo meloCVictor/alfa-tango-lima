@@ -18,10 +18,33 @@
     <!-- Tailwind + Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@700;800;900&display=swap"
         rel="stylesheet">
 
     <link rel="stylesheet" href="css/custom.css">
+
+    <!-- Identidade visual desta landing: azul-marinho + laranja (mais energia/urgência que o verde institucional) -->
+    <style>
+        :root {
+            --verde-principal: #12395e;
+            --verde-escuro: #0a2038;
+            --verde-medio: #1e4d78;
+            --verde-claro: #e7edf5;
+            --verde-bg: #f4f7fb;
+            --laranja-cta: #ff7a1a;
+        }
+        h1, h2, h3 { font-family: 'Poppins', 'Inter', sans-serif; }
+        .btn-cta {
+            background: var(--laranja-cta) !important;
+            box-shadow: 0 4px 15px rgba(255, 122, 26, 0.35) !important;
+        }
+        .btn-cta:hover { background: #e06a0f !important; }
+        .badge-destaque {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--laranja-cta); color: white;
+            padding: 6px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 700;
+        }
+    </style>
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -83,19 +106,21 @@
         <div class="container">
             <div class="hero-grid grid grid-cols-2 gap-12 items-center">
                 <div>
-                    <span class="badge-institucional">
-                        🏛️ Concurso Público 01/2026 · Prefeitura de Alvorada RS
-                    </span>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px;">
+                        <span class="badge-institucional">
+                            🏛️ Edital Aberto · Concurso 01/2026 · Alvorada RS
+                        </span>
+                        <span class="badge-destaque">🎯 Foco total na banca Legalle</span>
+                    </div>
 
-                    <h1 style="font-size: 2.5rem; color: var(--verde-escuro); margin: 20px 0;">
-                        Passe no concurso de <span style="color: var(--verde-principal);">Alvorada</span> com questões
-                        resolvidas da banca <span style="color: var(--verde-principal);">Legalle</span>
+                    <h1 style="font-size: 2.6rem; color: var(--verde-escuro); margin: 0 0 16px;">
+                        Prepare-se para o concurso de <span style="color: var(--laranja-cta);">Alvorada</span> com foco
+                        na banca <span style="color: var(--laranja-cta);">Legalle</span>
                     </h1>
 
                     <p style="font-size: 1.15rem; color: var(--cinza-claro); margin-bottom: 24px;">
-                        <strong>3 módulos gravados</strong> de resolução de questões no estilo da banca Legalle +
-                        <strong>1 aula final ao vivo</strong> de revisão geral que também fica gravada. Tudo direto ao
-                        ponto.
+                        Questões comentadas, revisão estratégica e aula ao vivo para você estudar exatamente o que pode
+                        aparecer na prova.
                     </p>
 
                     <!-- Prova social rápida -->
@@ -119,7 +144,7 @@
                     <a href="#inscricao" class="btn-cta">QUERO ME PREPARAR →</a>
 
                     <p style="font-size: 0.85rem; color: var(--cinza-claro); margin-top: 12px;">
-                        ✓ Acesso imediato · ✓ Pagamento via PIX · ✓ R$ 29,90 à vista
+                        ✓ 3 módulos gravados + aula ao vivo · ✓ Pagamento via PIX · ✓ R$ 29,90 à vista
                     </p>
                 </div>
 
@@ -128,9 +153,9 @@
                         style="border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); max-width: 100%;">
 
                     <div
-                        style="position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%); background: white; border-radius: 12px; padding: 16px 24px; box-shadow: 0 6px 20px rgba(0,0,0,0.12); white-space: nowrap;">
-                        <div style="font-size: 1.5rem; font-weight: 900; color: var(--verde-principal);">⭐ 4.9/5</div>
-                        <div style="font-size: 0.75rem; color: var(--cinza-claro);">Avaliação dos alunos</div>
+                        style="position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%); background: var(--verde-escuro); border-radius: 12px; padding: 14px 24px; box-shadow: 0 6px 20px rgba(0,0,0,0.2); max-width: 90%; text-align: center;">
+                        <div style="font-size: 1rem; font-weight: 800; color: white; white-space: nowrap;">🎓 Prof. Victor Costa Melo</div>
+                        <div style="font-size: 0.75rem; color: rgba(255,255,255,0.8);">ULBRA · PROCERGS · 10+ anos de magistério</div>
                     </div>
                 </div>
             </div>
@@ -219,9 +244,10 @@
 
                 <!-- Módulo 1 -->
                 <div class="card">
-                    <div
-                        style="display: inline-block; background: var(--verde-principal); color: white; font-weight: 800; font-size: 0.8rem; padding: 4px 12px; border-radius: 50px; margin-bottom: 12px;">
-                        MÓDULO 1</div>
+                    <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+                        <span style="background: var(--verde-principal); color: white; font-weight: 800; font-size: 0.8rem; padding: 4px 12px; border-radius: 50px;">MÓDULO 1</span>
+                        <span style="background: var(--verde-claro); color: var(--verde-principal); font-weight: 700; font-size: 0.75rem; padding: 4px 12px; border-radius: 50px;">🎬 GRAVADO</span>
+                    </div>
                     <div style="font-size: 2.5rem; margin-bottom: 8px;">📝</div>
                     <h3 style="font-size: 1.2rem; margin-bottom: 8px; color: var(--verde-escuro);">Resolução de Questões
                         I</h3>
@@ -232,9 +258,10 @@
 
                 <!-- Módulo 2 -->
                 <div class="card">
-                    <div
-                        style="display: inline-block; background: var(--verde-principal); color: white; font-weight: 800; font-size: 0.8rem; padding: 4px 12px; border-radius: 50px; margin-bottom: 12px;">
-                        MÓDULO 2</div>
+                    <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+                        <span style="background: var(--verde-principal); color: white; font-weight: 800; font-size: 0.8rem; padding: 4px 12px; border-radius: 50px;">MÓDULO 2</span>
+                        <span style="background: var(--verde-claro); color: var(--verde-principal); font-weight: 700; font-size: 0.75rem; padding: 4px 12px; border-radius: 50px;">🎬 GRAVADO</span>
+                    </div>
                     <div style="font-size: 2.5rem; margin-bottom: 8px;">📝</div>
                     <h3 style="font-size: 1.2rem; margin-bottom: 8px; color: var(--verde-escuro);">Resolução de Questões
                         II</h3>
@@ -244,9 +271,10 @@
 
                 <!-- Módulo 3 -->
                 <div class="card">
-                    <div
-                        style="display: inline-block; background: var(--verde-principal); color: white; font-weight: 800; font-size: 0.8rem; padding: 4px 12px; border-radius: 50px; margin-bottom: 12px;">
-                        MÓDULO 3</div>
+                    <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+                        <span style="background: var(--verde-principal); color: white; font-weight: 800; font-size: 0.8rem; padding: 4px 12px; border-radius: 50px;">MÓDULO 3</span>
+                        <span style="background: var(--verde-claro); color: var(--verde-principal); font-weight: 700; font-size: 0.75rem; padding: 4px 12px; border-radius: 50px;">🎬 GRAVADO</span>
+                    </div>
                     <div style="font-size: 2.5rem; margin-bottom: 8px;">📝</div>
                     <h3 style="font-size: 1.2rem; margin-bottom: 8px; color: var(--verde-escuro);">Resolução de Questões
                         III</h3>
@@ -293,6 +321,10 @@
                     <p style="color: var(--cinza-claro); margin-bottom: 16px;">
                         Conheço o estilo das bancas regionais como a Legalle e sei exatamente onde os candidatos erram.
                         Criei este curso para corrigir os erros mais comuns e te colocar à frente da concorrência.
+                    </p>
+                    <p style="color: var(--verde-escuro); font-weight: 700; font-style: italic; margin-bottom: 20px; border-left: 3px solid var(--laranja-cta); padding-left: 14px;">
+                        "Aprenda com quem une experiência prática em tecnologia e mais de uma década de ensino —
+                        sei exatamente onde os candidatos perdem pontos."
                     </p>
                     <div class="flex gap-8">
                         <div>
@@ -360,7 +392,8 @@
 
                     <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.2);">
                         <div style="text-decoration: line-through; opacity: 0.6; font-size: 1.1rem;">De R$ 67,00</div>
-                        <div style="font-size: 3rem; font-weight: 900;">R$ 29,90</div>
+                        <div style="font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.85; margin-bottom: 2px;">Acesso completo por apenas</div>
+                        <div class="preco-destaque" style="font-size: 3.2rem; font-weight: 900; color: var(--laranja-cta);">R$ 29,90</div>
                         <div style="font-size: 0.9rem; opacity: 0.8;">Pagamento único via PIX · Acesso imediato</div>
                     </div>
                 </div>

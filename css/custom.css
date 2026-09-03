@@ -375,7 +375,7 @@ h1, h2, h3 {
     }
 
     /* Preço grande não estoura */
-    .oferta-grid > div:first-child div[style*="font-size: 3rem"] {
+    .preco-destaque {
         font-size: 2.2rem !important;
     }
 
