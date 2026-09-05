@@ -1,32 +1,43 @@
-// Contagem regressiva até 26/09/2026 às 18:00 (horário de Brasília)
+// Contador de urgência: 15 minutos que reinicia ao chegar a zero
 document.addEventListener('DOMContentLoaded', function() {
     const elemento = document.getElementById('countdown');
     if (!elemento) return;
 
-    function atualizarCountdown() {
-        const deadline = new Date('2026-09-26T18:00:00-03:00').getTime();
-        const now = new Date().getTime();
-        const diff = deadline - now;
+    const DURACAO_SEGUNDOS = 15 * 60; // 15 minutos
 
-        if (diff <= 0) {
-            elemento.textContent = 'INSCRIÇÕES ENCERRADAS';
-            elemento.style.fontSize = '0.7rem';
-            return;
-        }
-
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-        elemento.textContent = 
-            days + 'd ' + 
-            String(hours).padStart(2, '0') + 'h ' + 
-            String(minutes).padStart(2, '0') + 'm ' + 
-            String(seconds).padStart(2, '0') + 's';
+    // Tenta recuperar tempo restante do sessionStorage (continua entre refreshes)
+    let tempoRestante = parseInt(sessionStorage.getItem('countdown_oferta'), 10);
+    if (!tempoRestante || isNaN(tempoRestante) || tempoRestante <= 0) {
+        tempoRestante = DURACAO_SEGUNDOS;
     }
 
-    // Atualiza imediatamente e depois a cada segundo
+    function atualizarCountdown() {
+        if (tempoRestante <= 0) {
+            // Reinicia o timer (mantém a pressão sempre ativa)
+            tempoRestante = DURACAO_SEGUNDOS;
+            sessionStorage.setItem('countdown_oferta', tempoRestante);
+        }
+
+        const minutos = Math.floor(tempoRestante / 60);
+        const segundos = tempoRestante % 60;
+
+        elemento.textContent =
+            String(minutos).padStart(2, '0') + ':' +
+            String(segundos).padStart(2, '0');
+
+        // Alerta visual quando faltam menos de 3 minutos
+        if (tempoRestante <= 180) {
+            elemento.style.animation = 'pulse-bg 0.4s infinite';
+            elemento.style.color = '#ffd700';
+        } else {
+            elemento.style.animation = 'pulse-bg 1s infinite';
+            elemento.style.color = 'white';
+        }
+
+        tempoRestante--;
+        sessionStorage.setItem('countdown_oferta', tempoRestante);
+    }
+
     atualizarCountdown();
     setInterval(atualizarCountdown, 1000);
 });

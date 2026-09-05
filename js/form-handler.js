@@ -1,13 +1,13 @@
 // ===== Configurações =====
-const CONFIG = {
+const CONFIG = Object.assign({
     PIX_CHAVE: '+5549999191709', // chave PIX tipo telefone
     PIX_NOME: 'VICTOR COSTA MELO',
     PIX_CIDADE: 'ALVORADA',
-    VALOR: 29.90,
+    VALOR: 39.90,
     WHATSAPP_NUMERO: '5549999191709',
     CURSO_SLUG: 'alvorada', // precisa bater com o slug cadastrado na tabela public.cursos
     GOOGLE_SCRIPT_URL: '' // Deixe vazio até configurar o Google Sheets
-};
+}, window.PAGE_CONFIG || {});
 
 // ===== Espera o DOM carregar =====
 document.addEventListener('DOMContentLoaded', function() {
@@ -187,28 +187,53 @@ async function matricularAlunoNoCurso(email, senha, nome, telefone, cargo) {
     let session = null;
     let status = 'novo';
 
-    const signUpRes = await supabaseClient.auth.signUp({
-        email: email,
-        password: senha,
-        options: { data: { nome: nome, telefone: telefone, cargo: cargo } }
-    });
-
-    if (!signUpRes.error) {
-        session = signUpRes.data.session;
-    } else if (signUpRes.error.message.toLowerCase().includes('already registered')) {
-        // Aluno já tem conta (ex.: comprou outro curso antes) — tenta logar com a senha informada
-        const signInRes = await supabaseClient.auth.signInWithPassword({ email: email, password: senha });
-        if (signInRes.error) {
-            return { status: 'senha_invalida' };
-        }
-        session = signInRes.data.session;
+    // 1. Verifica se o usuário já possui sessão ativa neste navegador
+    const { data: { session: activeSession } } = await supabaseClient.auth.getSession();
+    if (activeSession && activeSession.user && activeSession.user.email.toLowerCase() === email.toLowerCase()) {
+        session = activeSession;
         status = 'login';
     } else {
-        console.warn('Erro ao criar conta no Supabase:', signUpRes.error.message);
-        return { status: 'erro' };
+        // 2. Tenta registrar novo usuário
+        const signUpRes = await supabaseClient.auth.signUp({
+            email: email,
+            password: senha,
+            options: { data: { nome: nome, telefone: telefone, cargo: cargo } }
+        });
+
+        if (!signUpRes.error && signUpRes.data && signUpRes.data.session) {
+            session = signUpRes.data.session;
+        } else {
+            // Se o e-mail já existe no banco de dados, tenta autenticar (login) com a senha fornecida
+            const isAlreadyUser = signUpRes.error && (
+                signUpRes.error.message.toLowerCase().includes('already registered') ||
+                signUpRes.error.message.toLowerCase().includes('already in use') ||
+                signUpRes.error.message.toLowerCase().includes('already exists') ||
+                signUpRes.error.message.toLowerCase().includes('cadastrado') ||
+                signUpRes.error.status === 422 ||
+                signUpRes.error.status === 400
+            );
+
+            if (isAlreadyUser || signUpRes.error) {
+                const signInRes = await supabaseClient.auth.signInWithPassword({ email: email, password: senha });
+                if (signInRes.error) {
+                    console.warn('Senha incorreta para usuário existente:', signInRes.error.message);
+                    return { status: 'senha_invalida' };
+                }
+                session = signInRes.data.session;
+                status = 'login';
+            } else {
+                console.warn('Erro ao criar conta no Supabase:', signUpRes.error ? signUpRes.error.message : 'desconhecido');
+                return { status: 'erro' };
+            }
+        }
     }
 
-    if (!session) return { status: 'erro' };
+    if (!session || !session.user) return { status: 'erro' };
+
+    // Registra início da sessão de 60 minutos
+    if (typeof iniciarSessao === 'function') {
+        iniciarSessao();
+    }
 
     const { data: curso, error: erroCurso } = await supabaseClient
         .from('cursos')

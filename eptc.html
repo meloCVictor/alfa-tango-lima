@@ -1,0 +1,2092 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curso Preparatório EPTC 2026 — Informática | Prof. Victor Costa</title>
+  <meta name="description" content="Curso 100% focado em Informática para o concurso da EPTC (Edital nº 01/2026) da Banca Objetiva. Aulas gravadas, PDFs e revisão ao vivo com o Prof. Victor Costa.">
+
+  <!-- Basecoat CSS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/basecoat.cdn.min.css">
+  
+  <!-- Shell System Files -->
+  <link rel="stylesheet" href="shell.css">
+  <script src="shell.js" defer></script>
+
+  <style>
+    :root {
+      --accent: #1a6b3c;
+      --verde-principal: #1a6b3c;
+      --verde-escuro: #0d4a28;
+      --verde-claro: #e8f5e9;
+      --verde-suave: #f1f8f3;
+      --cinza-claro: #555555;
+      --cinza-borda: #dcdfe3;
+      --vermelho-urgencia: #c0392b;
+      --vermelho-brilhante: #e74c3c;
+      --texto-escuro: #15251d;
+      --sombra-card: 0 4px 20px rgba(13, 74, 40, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04);
+      --sombra-hover: 0 10px 28px rgba(13, 74, 40, 0.14), 0 3px 8px rgba(0, 0, 0, 0.06);
+      --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      color: var(--texto-escuro);
+      background-color: #ffffff;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Container e Utilitários Estilo Alvorada */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .flex {
+      display: flex;
+    }
+
+    .items-center {
+      align-items: center;
+    }
+
+    .justify-between {
+      justify-content: space-between;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: var(--sombra-card);
+      padding: 24px;
+    }
+
+    .header-btn {
+      background: transparent;
+      border: 1.5px solid var(--verde-principal);
+      color: var(--verde-principal);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .header-btn:hover {
+      background: var(--verde-principal);
+      color: #ffffff;
+      transform: scale(1.02);
+    }
+
+    /* Barra de Urgência */
+    .urgency-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: linear-gradient(90deg, #c0392b 0%, #e74c3c 100%);
+      color: #ffffff;
+      padding: 10px 16px;
+      box-shadow: 0 2px 8px rgba(192, 57, 43, 0.35);
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+
+    .urgency-bar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .urgency-text {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .urgency-fire {
+      font-size: 1.15rem;
+      animation: pulseFire 1.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulseFire {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.2); }
+    }
+
+    .countdown-box {
+      background: rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      display: inline-block;
+      min-width: 68px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .countdown-urgent {
+      background: #f1c40f;
+      color: #7d1007;
+      border-color: #fff;
+      animation: flashUrgent 0.6s infinite alternate;
+    }
+
+    @keyframes flashUrgent {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0.85; transform: scale(1.06); }
+    }
+
+    .urgency-cta {
+      background: #ffffff;
+      color: var(--vermelho-urgencia);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 5px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      transition: transform 0.2s ease, background 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .urgency-cta:hover {
+      transform: scale(1.05);
+      background: #fff8f8;
+      color: #962215;
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 45px;
+      z-index: 999;
+      background: #ffffff;
+      border-bottom: 3px solid var(--verde-principal);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 74px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-logo-svg {
+      width: 46px;
+      height: 46px;
+      flex-shrink: 0;
+    }
+
+    .brand-text-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      color: var(--verde-principal);
+      font-weight: 800;
+      font-size: 1.18rem;
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      color: var(--cinza-claro);
+      font-size: 0.82rem;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-nav-secondary {
+      background: transparent;
+      border: 1.5px solid var(--verde-principal);
+      color: var(--verde-principal);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .btn-nav-secondary:hover {
+      background: var(--verde-principal);
+      color: #ffffff;
+      transform: scale(1.02);
+    }
+
+    .btn-cta {
+      background: var(--verde-principal);
+      color: #ffffff;
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      border: 1.5px solid var(--verde-principal);
+      box-shadow: 0 3px 10px rgba(26, 107, 60, 0.25);
+      cursor: pointer;
+    }
+
+    .btn-cta:hover {
+      background: var(--verde-escuro);
+      border-color: var(--verde-escuro);
+      color: #ffffff;
+      transform: scale(1.03);
+    }
+
+    .nav-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      color: var(--verde-principal);
+    }
+
+    .nav-toggle svg {
+      width: 28px;
+      height: 28px;
+      display: block;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, var(--verde-escuro) 0%, #155530 45%, var(--verde-principal) 100%);
+      color: #ffffff;
+      padding: 72px 0 64px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-layout {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 48px;
+    }
+
+    .hero-content {
+      flex: 1 1 54%;
+      max-width: 630px;
+      text-align: left;
+    }
+
+    .hero-visual {
+      flex: 1 1 46%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-visual svg {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.35));
+      transition: transform 0.3s ease;
+    }
+
+    .hero-visual svg:hover {
+      transform: translateY(-4px);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-size: 2.7rem;
+      font-weight: 800;
+      line-height: 1.18;
+      margin: 0 0 18px 0;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.92);
+      margin: 0 0 28px 0;
+      font-weight: 400;
+    }
+
+    .hero-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #ffffff;
+      color: var(--verde-principal);
+      font-size: 1.15rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 16px 38px;
+      border-radius: 10px;
+      text-decoration: none;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .hero-cta-btn:hover {
+      transform: scale(1.04);
+      background: #f4fff7;
+      color: var(--verde-escuro);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-subtext {
+      margin-top: 20px;
+      font-size: 0.92rem;
+      color: rgba(255, 255, 255, 0.85);
+      font-weight: 500;
+    }
+
+    .hero-salary-box {
+      margin-top: 26px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px dashed rgba(255, 255, 255, 0.4);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .hero-salary-box strong {
+      color: #55efc4;
+      font-weight: 800;
+    }
+
+    /* Common Section Styles */
+    .section-padding {
+      padding: 72px 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 44px;
+    }
+
+    .section-header h2 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--verde-escuro);
+      letter-spacing: -0.5px;
+      line-height: 1.25;
+    }
+
+    .section-header p {
+      font-size: 1.05rem;
+      color: var(--cinza-claro);
+      margin-top: 8px;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Section "O que cai na prova" */
+    .bg-light-tone {
+      background-color: var(--verde-suave);
+    }
+
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .topic-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--sombra-card);
+      border: 1px solid rgba(26, 107, 60, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .topic-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--sombra-hover);
+      border-color: var(--verde-principal);
+    }
+
+    .topic-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .topic-icon {
+      font-size: 1.9rem;
+      line-height: 1;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--verde-claro);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .topic-title {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: var(--verde-escuro);
+      line-height: 1.3;
+    }
+
+    .topic-desc {
+      font-size: 0.94rem;
+      color: #333333;
+      line-height: 1.5;
+    }
+
+    /* Section Módulos do Curso */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .module-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--sombra-card);
+      border: 1px solid var(--cinza-borda);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .module-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--sombra-hover);
+    }
+
+    .module-card-highlight {
+      border: 2px solid var(--verde-principal);
+      background: linear-gradient(180deg, #ffffff 0%, #f7fdf9 100%);
+    }
+
+    .badge-live-corner {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: var(--vermelho-urgencia);
+      color: #ffffff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 2px 6px rgba(192, 57, 43, 0.3);
+    }
+
+    .badge-live-corner::before {
+      content: "";
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ffffff;
+      animation: blinkDot 1s infinite alternate;
+    }
+
+    @keyframes blinkDot {
+      0% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+
+    .module-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .pill-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    .pill-module {
+      background: var(--verde-claro);
+      color: var(--verde-escuro);
+    }
+
+    .pill-format {
+      background: #f0f3f6;
+      color: #444444;
+    }
+
+    .module-icon-large {
+      font-size: 2.6rem;
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .module-card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--verde-escuro);
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .module-card-desc {
+      font-size: 0.92rem;
+      color: #444444;
+      line-height: 1.55;
+      margin-bottom: 18px;
+      flex-grow: 1;
+    }
+
+    .module-diff-list {
+      list-style: none;
+      border-top: 1px solid #edf2ef;
+      padding-top: 14px;
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .module-diff-item {
+      font-size: 0.84rem;
+      color: #2e4436;
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .module-diff-icon {
+      flex-shrink: 0;
+      font-size: 0.95rem;
+    }
+
+    /* Section Tabela de Cargos */
+    .table-container {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: var(--sombra-card);
+      overflow-x: auto;
+      border: 1px solid var(--cinza-borda);
+    }
+
+    .eptc-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.94rem;
+    }
+
+    .eptc-table th {
+      background: var(--verde-escuro);
+      color: #ffffff;
+      padding: 16px 18px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .eptc-table td {
+      padding: 16px 18px;
+      border-bottom: 1px solid #edf0ed;
+      vertical-align: middle;
+      color: #2b3a32;
+    }
+
+    .eptc-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .eptc-table tr:hover td {
+      background-color: #f7fbf8;
+    }
+
+    .group-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: var(--verde-principal);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 1rem;
+    }
+
+    .group-d-tag {
+      background: #8899a6;
+    }
+
+    .badge-questoes {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: var(--verde-claro);
+      color: var(--verde-escuro);
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+
+    .badge-sem-questoes {
+      background: #f0f0f0;
+      color: #777777;
+    }
+
+    .weight-highlight {
+      font-weight: 800;
+      color: var(--verde-principal);
+      font-size: 1.05rem;
+    }
+
+    /* Section Por que escolher este curso */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .why-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 30px 24px;
+      box-shadow: var(--sombra-card);
+      border: 1px solid rgba(26, 107, 60, 0.12);
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .why-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--sombra-hover);
+    }
+
+    .why-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+
+    .why-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--verde-escuro);
+      margin-bottom: 12px;
+    }
+
+    .why-desc {
+      font-size: 0.95rem;
+      color: #4a5a51;
+      line-height: 1.6;
+    }
+
+    /* Section Preço / Oferta */
+    .offer-section {
+      background: linear-gradient(180deg, #f0f8f3 0%, #e2f2e6 100%);
+      padding: 80px 0;
+    }
+
+    .offer-card {
+      max-width: 680px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 2.5px solid var(--verde-principal);
+      border-radius: 16px;
+      padding: 40px 36px;
+      box-shadow: 0 12px 36px rgba(13, 74, 40, 0.16);
+      text-align: center;
+      position: relative;
+    }
+
+    .offer-top-badge {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--vermelho-urgencia);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.84rem;
+      padding: 6px 18px;
+      border-radius: 999px;
+      letter-spacing: 0.6px;
+      box-shadow: 0 4px 10px rgba(192, 57, 43, 0.3);
+      white-space: nowrap;
+    }
+
+    .offer-title {
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--verde-escuro);
+      margin-top: 8px;
+      margin-bottom: 12px;
+    }
+
+    .price-box {
+      margin: 20px 0;
+    }
+
+    .old-price {
+      font-size: 1.15rem;
+      color: #888888;
+      text-decoration: line-through;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .current-price {
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--verde-principal);
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+
+    .current-price span {
+      font-size: 1.7rem;
+      font-weight: 700;
+      vertical-align: super;
+      margin-right: 4px;
+    }
+
+    .offer-meta {
+      font-size: 0.96rem;
+      color: #3b5043;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    .offer-list {
+      list-style: none;
+      text-align: left;
+      margin: 28px auto;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .offer-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1rem;
+      color: #1e3327;
+      font-weight: 500;
+    }
+
+    .offer-check {
+      color: var(--verde-principal);
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      font-weight: 800;
+    }
+
+    .btn-offer-cta {
+      display: block;
+      width: 100%;
+      background: var(--verde-principal);
+      color: #ffffff;
+      font-size: 1.25rem;
+      font-weight: 800;
+      text-decoration: none;
+      padding: 18px 24px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(26, 107, 60, 0.35);
+      transition: all 0.2s ease;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-offer-cta:hover {
+      background: var(--verde-escuro);
+      transform: scale(1.02);
+      box-shadow: 0 12px 26px rgba(13, 74, 40, 0.4);
+    }
+
+    .offer-urgency-note {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: var(--vermelho-urgencia);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* Modal de Matrícula (Simulação Interativa) */
+    .modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.is-active {
+      display: flex;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      border-radius: 14px;
+      max-width: 500px;
+      width: 100%;
+      padding: 30px;
+      position: relative;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+      animation: modalPop 0.25s ease-out;
+    }
+
+    @keyframes modalPop {
+      0% { transform: scale(0.95); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: transparent;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: #888;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .modal-close:hover {
+      background: #eee;
+      color: #111;
+    }
+
+    /* Section FAQ */
+    .faq-container {
+      max-width: 820px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .faq-item {
+      background: #ffffff;
+      border: 1px solid var(--cinza-borda);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .faq-item:hover {
+      border-color: var(--verde-principal);
+    }
+
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      padding: 20px 24px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--verde-escuro);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .faq-question:hover {
+      background: #f9fbf9;
+    }
+
+    .faq-chevron {
+      font-size: 1.2rem;
+      color: var(--verde-principal);
+      transition: transform 0.25s ease;
+    }
+
+    .faq-item.is-open .faq-chevron {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      display: none;
+      padding: 0 24px 20px 24px;
+      font-size: 0.97rem;
+      color: #3b4d41;
+      line-height: 1.6;
+      border-top: 1px solid #f0f3f0;
+      padding-top: 14px;
+    }
+
+    .faq-item.is-open .faq-answer {
+      display: block;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: var(--verde-escuro);
+      color: #ffffff;
+      padding: 48px 0 32px 0;
+      font-size: 0.92rem;
+      border-top: 4px solid var(--verde-principal);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 20px;
+    }
+
+    .footer-brand {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .footer-brand span {
+      color: #55efc4;
+    }
+
+    .footer-disclaimer {
+      max-width: 680px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 6px;
+    }
+
+    .footer-link {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-link:hover {
+      color: #55efc4;
+      text-decoration: underline;
+    }
+
+    .footer-copy {
+      margin-top: 16px;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Responsividade */
+    @media (max-width: 992px) {
+      .hero-layout {
+        flex-direction: column;
+        text-align: center;
+        gap: 40px;
+      }
+      .hero-content {
+        max-width: 100%;
+        text-align: center;
+      }
+      .hero-title {
+        font-size: 2.3rem;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hero-subtitle {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hero-visual {
+        width: 100%;
+        max-width: 480px;
+      }
+      .topics-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .modules-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .why-grid {
+        grid-template-columns: 1fr;
+        max-width: 540px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .site-header {
+        top: 44px;
+      }
+
+      .nav-toggle {
+        display: block;
+      }
+
+      .header-nav {
+        display: none;
+        position: absolute;
+        top: 74px;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        flex-direction: column;
+        padding: 20px;
+        gap: 12px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        border-bottom: 2px solid var(--verde-principal);
+      }
+
+      .header-nav.nav-active {
+        display: flex;
+      }
+
+      .header-nav .btn-nav-secondary,
+      .header-nav .btn-cta {
+        width: 100%;
+        text-align: center;
+      }
+
+      .modules-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topics-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-title {
+        font-size: 1.95rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+
+      .offer-card {
+        padding: 34px 20px;
+      }
+
+      .current-price {
+        font-size: 2.8rem;
+      }
+
+      .prof-card {
+        flex-direction: column !important;
+        text-align: center !important;
+        padding: 28px 20px !important;
+      }
+
+      .prof-tags {
+        justify-content: center !important;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .urgency-text-full {
+        display: none;
+      }
+
+      .urgency-bar-inner {
+        justify-content: space-between;
+      }
+
+      .urgency-cta {
+        padding: 4px 10px;
+        font-size: 0.78rem;
+      }
+
+      .hero-section {
+        padding: 48px 0 42px 0;
+      }
+
+      .hero-title {
+        font-size: 1.65rem;
+      }
+
+      .hero-cta-btn {
+        width: 100%;
+        font-size: 1rem;
+        padding: 14px 20px;
+      }
+
+      .hero-salary-box {
+        font-size: 0.85rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 2px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Barra de Urgência (Sticky Top: 0, Z-index: 1000) -->
+  <aside class="urgency-bar" aria-label="Aviso de encerramento das inscrições">
+    <div class="container urgency-bar-inner">
+      <div class="urgency-text">
+        <span class="urgency-fire" aria-hidden="true">🔥</span>
+        <span class="urgency-text-full">
+          <strong>OFERTA RELÂMPAGO!</strong> Inscrições da EPTC encerram em 09/10 — garantia de vaga encerra em:
+        </span>
+        <span class="urgency-text-mobile" style="display: none;">Encerra em:</span>
+        <span id="countdownTimer" class="countdown-box" aria-live="polite">15:00</span>
+      </div>
+      <a href="#inscricao" class="urgency-cta">GARANTIR AGORA →</a>
+    </div>
+  </aside>
+
+  <!-- 2. Header (Grudado na barra) -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="brand-group" aria-label="Página Inicial - Curso EPTC 2026">
+        <!-- Brasão Circular SVG Estilo Alvorada para EPTC -->
+        <svg class="brand-logo-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="32" cy="32" r="30" fill="#1a6b3c" stroke="#0d4a28" stroke-width="2.5"/>
+          <circle cx="32" cy="32" r="25" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="3 2"/>
+          <path d="M32 12L35.5 22.8H46.8L37.7 29.5L41.2 40.2L32 33.6L22.8 40.2L26.3 29.5L17.2 22.8H28.5L32 12Z" fill="#ffeb3b"/>
+          <!-- Símbolo de trânsito/circulação integrado -->
+          <circle cx="32" cy="46" r="4.5" fill="#ffffff"/>
+          <path d="M22 47.5C24.5 50.5 28 52 32 52C36 52 39.5 50.5 42 47.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+
+        <div class="brand-text-col">
+          <span class="brand-title">CURSO EPTC</span>
+          <span class="brand-subtitle">Informática · Prof. Victor Costa</span>
+        </div>
+      </a>
+
+      <!-- Botão Hambúrguer Mobile -->
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menu de navegação" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- Navegação Principal -->
+      <nav class="header-nav" id="headerNav" aria-label="Navegação do site">
+        <a href="#topicos" class="btn-nav-secondary">← Outros cursos</a>
+        <button type="button" class="btn-nav-secondary" onclick="alert('Área do aluno: insira suas credenciais enviadas por e-mail no portal Hotmart/Nutror.')">Já é aluno? Entrar</button>
+        <a href="#inscricao" class="btn-cta">QUERO ME INSCREVER</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 3. Hero Section (Flex Layout: Conteúdo + Mockup Ilustrado) -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-layout">
+        <!-- Lado Esquerdo: Conteúdo Textual -->
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span>📋</span> EDITAL Nº 01/2026 · BANCA OBJETIVA
+          </div>
+
+          <h1 class="hero-title">
+            Passar em Informática na EPTC nunca foi tão objetivo
+          </h1>
+
+          <p class="hero-subtitle">
+            Curso 100% focado no que realmente cai na prova da EPTC. Resolução de questões reais da banca Objetiva, material em PDF e aula ao vivo de revisão.
+          </p>
+
+          <a href="#inscricao" class="hero-cta-btn">
+            <span>QUERO ME INSCREVER</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+
+          <div class="hero-subtext">
+            Inscrições abertas de 09/09 a 09/10/2026 · Provas em 22/11 e 06/12/2026
+          </div>
+
+          <div>
+            <div class="hero-salary-box">
+              <span>💼 Remuneração:</span>
+              <span>Salário de Técnico de Informática: <strong>R$ 4.373,58</strong> + <strong>R$ 1.227,60</strong> de vale-alimentação</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lado Direito: Ilustração / Mockup Notebook EPTC -->
+        <div class="hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 520 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Glow sutil de fundo -->
+            <circle cx="260" cy="210" r="190" fill="#55efc4" fill-opacity="0.12" filter="blur(30px)"/>
+            
+            <!-- Badges Flutuantes Decorativos -->
+            <!-- Badge Topo: Banca Objetiva -->
+            <g transform="translate(320, 24)">
+              <rect width="180" height="38" rx="19" fill="#0d4a28" stroke="#55efc4" stroke-width="1.5"/>
+              <text x="20" y="24" fill="#ffffff" font-size="12" font-weight="700" font-family="system-ui">🎯 100% Banca Objetiva</text>
+            </g>
+
+            <!-- Badge Esquerda: Aula ao Vivo -->
+            <g transform="translate(10, 310)">
+              <rect width="170" height="38" rx="19" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+              <circle cx="22" cy="19" r="5" fill="#c0392b"/>
+              <text x="34" y="23" fill="#15251d" font-size="12" font-weight="700" font-family="system-ui">Revisão Ao Vivo</text>
+            </g>
+
+            <!-- Sombra do Notebook -->
+            <ellipse cx="260" cy="380" rx="210" ry="14" fill="#051f11" fill-opacity="0.45"/>
+
+            <!-- Tampa / Chassi Superior do Laptop -->
+            <rect x="65" y="60" width="390" height="255" rx="14" fill="#1b2820" stroke="#365241" stroke-width="2"/>
+            
+            <!-- Câmera no topo do display -->
+            <circle cx="260" cy="72" r="3" fill="#4d6b57"/>
+            <circle cx="260" cy="72" r="1.2" fill="#55efc4"/>
+
+            <!-- Tela do Laptop (Verde Escuro Marca com Interface) -->
+            <rect x="79" y="82" width="362" height="221" rx="6" fill="#0d4a28"/>
+
+            <!-- Topbar da aplicação dentro da tela -->
+            <rect x="79" y="82" width="362" height="28" rx="6" fill="#145933"/>
+            <!-- Botões da janela (estilo Mac/Browser) -->
+            <circle cx="95" cy="96" r="4" fill="#e74c3c"/>
+            <circle cx="107" cy="96" r="4" fill="#f1c40f"/>
+            <circle cx="119" cy="96" r="4" fill="#2ecc71"/>
+            <rect x="138" y="88" width="180" height="16" rx="4" fill="#0c3c20" fill-opacity="0.7"/>
+            <text x="146" y="100" fill="#a8e6cf" font-size="9" font-family="system-ui" font-weight="600">portal.cursoeptc.com.br/questoes</text>
+            <!-- Badge "EPTC 2026" no topo direito da tela -->
+            <rect x="360" y="88" width="70" height="16" rx="4" fill="#ffeb3b"/>
+            <text x="369" y="100" fill="#0d4a28" font-size="8.5" font-family="system-ui" font-weight="800">EPTC 2026</text>
+
+            <!-- Área Principal da Tela: Questão de Prova Simulada -->
+            <!-- Card de Questão Branco -->
+            <rect x="91" y="118" width="338" height="175" rx="6" fill="#ffffff"/>
+            
+            <!-- Cabeçalho da Questão -->
+            <rect x="99" y="125" width="90" height="15" rx="3" fill="#e8f5e9"/>
+            <text x="105" y="136" fill="#1a6b3c" font-size="8" font-weight="800" font-family="system-ui">QUESTÃO 04 · WORD</text>
+            <text x="325" y="136" fill="#888888" font-size="8" font-family="system-ui">Banca Objetiva</text>
+
+            <!-- Enunciado da Questão -->
+            <text x="99" y="152" fill="#15251d" font-size="9.5" font-weight="700" font-family="system-ui">No MS Word 2016 (versão em Português), o atalho</text>
+            <text x="99" y="164" fill="#15251d" font-size="9.5" font-weight="700" font-family="system-ui">padrão utilizado para SALVAR o documento ativo é:</text>
+
+            <!-- Alternativa A -->
+            <rect x="99" y="174" width="322" height="19" rx="4" fill="#f8f9fa" stroke="#e0e0e0" stroke-width="0.8"/>
+            <text x="108" y="187" fill="#666666" font-size="8.5" font-family="system-ui">A) Ctrl + S</text>
+
+            <!-- Alternativa B (Gabarito / Destaque Correto em Verde) -->
+            <rect x="99" y="196" width="322" height="21" rx="4" fill="#e8f5e9" stroke="#1a6b3c" stroke-width="1.2"/>
+            <circle cx="112" cy="206" r="6" fill="#1a6b3c"/>
+            <!-- Ícone checkmark -->
+            <path d="M109 206L111 208L115 204" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="124" y="210" fill="#0d4a28" font-size="9" font-weight="800" font-family="system-ui">B) Ctrl + B  (Gabarito Comentado em Vídeo)</text>
+
+            <!-- Alternativa C -->
+            <rect x="99" y="220" width="322" height="19" rx="4" fill="#f8f9fa" stroke="#e0e0e0" stroke-width="0.8"/>
+            <text x="108" y="233" fill="#666666" font-size="8.5" font-family="system-ui">C) Ctrl + A</text>
+
+            <!-- Player / Rodapé da Aula na Tela -->
+            <rect x="91" y="246" width="338" height="47" rx="0" fill="#f1f8f3"/>
+            <!-- Botão Play -->
+            <circle cx="114" cy="270" r="12" fill="#1a6b3c"/>
+            <polygon points="111,264 120,270 111,276" fill="#ffffff"/>
+            <!-- Barra de Progresso do Vídeo -->
+            <rect x="136" y="268" width="220" height="4" rx="2" fill="#cbe3d4"/>
+            <rect x="136" y="268" width="135" height="4" rx="2" fill="#1a6b3c"/>
+            <circle cx="271" cy="270" r="4.5" fill="#1a6b3c"/>
+            <text x="136" y="261" fill="#1a6b3c" font-size="8.5" font-weight="700" font-family="system-ui">Vídeo-Resolução Explicativa com Prof. Victor Costa</text>
+            <text x="366" y="273" fill="#666666" font-size="8" font-family="system-ui">14:28 / 28:00</text>
+
+            <!-- Base Inferior do Laptop (Chassi / Teclado) -->
+            <path d="M25 315 L495 315 L460 338 L60 338 Z" fill="#d1d9d4"/>
+            <!-- Borda chanfrada inferior -->
+            <path d="M60 338 L460 338 L455 344 L65 344 Z" fill="#aab5ae"/>
+            <!-- Entalhe de abertura frontal da tampa -->
+            <rect x="235" y="316" width="50" height="4" rx="2" fill="#8f9d94"/>
+            <!-- Trackpad -->
+            <rect x="225" y="322" width="70" height="14" rx="2" fill="#c3ccc6" stroke="#b2bbb5" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Seção "O que cai na prova" -->
+  <section class="section-padding bg-light-tone" id="topicos">
+    <div class="container">
+      <div class="section-header">
+        <h2>O que cai em Informática na EPTC</h2>
+        <p>Banca Objetiva · 6 a 8 questões dependendo do cargo. Conteúdo programático esquematizado:</p>
+      </div>
+
+      <div class="topics-grid">
+        <!-- 1 -->
+        <article class="topic-card">
+          <div class="topic-top">
+            <div class="topic-icon">💻</div>
+            <h3 class="topic-title">Windows 10+</h3>
+          </div>
+          <p class="topic-desc">Configurações gerais, atalhos de teclado, comandos, gerenciamento de arquivos e Painel de Controle.</p>
+        </article>
+
+        <!-- 2 -->
+        <article class="topic-card">
+          <div class="topic-top">
+            <div class="topic-icon">📝</div>
+            <h3 class="topic-title">Word 2016+</h3>
+          </div>
+          <p class="topic-desc">Formatação de parágrafos e fontes, revisão de texto, mala direta, paginação e controle de estilos.</p>
+        </article>
+
+        <!-- 3 -->
+        <article class="topic-card">
+          <div class="topic-top">
+            <div class="topic-icon">📊</div>
+            <h3 class="topic-title">Excel 2016+</h3>
+          </div>
+          <p class="topic-desc">Fórmulas essenciais (PROCV, SE, SOMASE), gráficos dinâmicos, formatação condicional e referências.</p>
+        </article>
+
+        <!-- 4 -->
+        <article class="topic-card">
+          <div class="topic-top">
+            <div class="topic-icon">📽️</div>
+            <h3 class="topic-title">PowerPoint 2016+</h3>
+          </div>
+          <p class="topic-desc">Criação de slides, transições, modos de exibição, animações e atalhos na apresentação.</p>
+        </article>
+
+        <!-- 5 -->
+        <article class="topic-card">
+          <div class="topic-top">
+            <div class="topic-icon">🌐</div>
+            <h3 class="topic-title">Internet e Navegadores</h3>
+          </div>
+          <p class="topic-desc">Google Chrome, configurações de privacidade, favoritos, downloads e protocolos de correio eletrônico.</p>
+        </article>
+
+        <!-- 6 -->
+        <article class="topic-card">
+          <div class="topic-top">
+            <div class="topic-icon">🔒</div>
+            <h3 class="topic-title">Segurança da Informação</h3>
+          </div>
+          <p class="topic-desc">Malwares (ransomware, phishing, trojans), antivírus, políticas de backup e boas práticas de senhas.</p>
+        </article>
+
+        <!-- 7 -->
+        <article class="topic-card">
+          <div class="topic-top">
+            <div class="topic-icon">🤖</div>
+            <h3 class="topic-title">Inteligência Artificial</h3>
+          </div>
+          <p class="topic-desc">Conceitos fundamentais de IA, prompts e aplicações práticas no cotidiano administrativo e corporativo.</p>
+        </article>
+
+        <!-- 8 -->
+        <article class="topic-card">
+          <div class="topic-top">
+            <div class="topic-icon">📹</div>
+            <h3 class="topic-title">Ferramentas Corporativas</h3>
+          </div>
+          <p class="topic-desc">Zoom e Microsoft Teams: agendamento de reuniões, compartilhamento de tela e canais de comunicação.</p>
+        </article>
+
+        <!-- 9 -->
+        <article class="topic-card">
+          <div class="topic-top">
+            <div class="topic-icon">🖥️</div>
+            <h3 class="topic-title">Hardware e Software</h3>
+          </div>
+          <p class="topic-desc">Conceitos de processadores, memórias RAM e ROM, unidades de armazenamento e periféricos de E/S.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Seção "Módulos do Curso" (Grid de 4 cards) -->
+  <section class="section-padding" id="modulos">
+    <div class="container">
+      <div class="section-header">
+        <h2>Módulos do Curso</h2>
+        <p>Estrutura pensada para cobrir 100% dos tópicos com máxima objetividade e agilidade.</p>
+      </div>
+
+      <div class="modules-grid">
+        <!-- Módulo 1 -->
+        <div class="module-card">
+          <div class="module-badges">
+            <span class="pill-badge pill-module">MÓDULO 1</span>
+            <span class="pill-badge pill-format">🎬 GRAVADO</span>
+          </div>
+          <div class="module-icon-large" aria-hidden="true">📄</div>
+          <h3 class="module-card-title">Resolução de Questões: Word (banca Objetiva)</h3>
+          <p class="module-card-desc">
+            Aula gravada com resolução passo a passo de questões reais de Microsoft Word no estilo da banca Objetiva. Você vê exatamente como identificar os detalhes que separam a alternativa certa das erradas.
+          </p>
+          <ul class="module-diff-list">
+            <li class="module-diff-item"><span class="module-diff-icon">📄</span> Material complementar em PDF</li>
+            <li class="module-diff-item"><span class="module-diff-icon">🔐</span> Acesso à plataforma exclusiva</li>
+            <li class="module-diff-item"><span class="module-diff-icon">💬</span> Fórum de dúvidas com o professor</li>
+          </ul>
+        </div>
+
+        <!-- Módulo 2 -->
+        <div class="module-card">
+          <div class="module-badges">
+            <span class="pill-badge pill-module">MÓDULO 2</span>
+            <span class="pill-badge pill-format">🎬 GRAVADO</span>
+          </div>
+          <div class="module-icon-large" aria-hidden="true">🪟</div>
+          <h3 class="module-card-title">Resolução de Questões: Windows + Segurança</h3>
+          <p class="module-card-desc">
+            Aula gravada com resolução de questões de Windows 10 e Segurança da Informação cobradas pela banca Objetiva. Domine configurações do sistema, backups, antivírus e boas práticas de senha que mais caem em prova.
+          </p>
+          <ul class="module-diff-list">
+            <li class="module-diff-item"><span class="module-diff-icon">📄</span> Material complementar em PDF</li>
+            <li class="module-diff-item"><span class="module-diff-icon">🔐</span> Acesso à plataforma exclusiva</li>
+            <li class="module-diff-item"><span class="module-diff-icon">💬</span> Fórum de dúvidas com o professor</li>
+          </ul>
+        </div>
+
+        <!-- Módulo 3 -->
+        <div class="module-card">
+          <div class="module-badges">
+            <span class="pill-badge pill-module">MÓDULO 3</span>
+            <span class="pill-badge pill-format">🎬 GRAVADO</span>
+          </div>
+          <div class="module-icon-large" aria-hidden="true">🌐</div>
+          <h3 class="module-card-title">Resolução de Questões: Excel, PPT, Internet e IA</h3>
+          <p class="module-card-desc">
+            Aula gravada com resolução de questões de Excel, PowerPoint, navegadores, correio eletrônico, ferramentas corporativas (Zoom e Teams) e Inteligência Artificial. Domine atalhos e configurações mais cobradas.
+          </p>
+          <ul class="module-diff-list">
+            <li class="module-diff-item"><span class="module-diff-icon">📄</span> Material complementar em PDF</li>
+            <li class="module-diff-item"><span class="module-diff-icon">🔐</span> Acesso à plataforma exclusiva</li>
+            <li class="module-diff-item"><span class="module-diff-icon">💬</span> Fórum de dúvidas com o professor</li>
+          </ul>
+        </div>
+
+        <!-- Módulo 4 (Destaque AO VIVO) -->
+        <div class="module-card module-card-highlight">
+          <div class="badge-live-corner">AO VIVO</div>
+          <div class="module-badges">
+            <span class="pill-badge pill-module">MÓDULO 4</span>
+            <span class="pill-badge pill-format">🎥 AO VIVO + GRAVADO</span>
+          </div>
+          <div class="module-icon-large" aria-hidden="true">🎯</div>
+          <h3 class="module-card-title">Revisão Ao Vivo: Tira-Dúvidas Final</h3>
+          <p class="module-card-desc">
+            Aula ao vivo e online para revisar tudo o que foi visto nos módulos anteriores. Tire suas dúvidas em tempo real, fixe os conceitos e saia na frente dos concorrentes. Não pôde assistir? Fica 100% gravada!
+          </p>
+          <ul class="module-diff-list">
+            <li class="module-diff-item"><span class="module-diff-icon">🔴</span> Transmissão ao vivo em tempo real</li>
+            <li class="module-diff-item"><span class="module-diff-icon">▶️</span> Gravação disponível após a aula</li>
+            <li class="module-diff-item"><span class="module-diff-icon">💬</span> Interação direta com o professor</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Seção "Tabela de Cargos" -->
+  <section class="section-padding bg-light-tone" id="cargos">
+    <div class="container">
+      <div class="section-header">
+        <h2>Tabela de Cargos e Peso de Informática</h2>
+        <p>Confira o impacto de Informática para o seu cargo no Edital nº 01/2026 da EPTC:</p>
+      </div>
+
+      <div class="table-container">
+        <table class="eptc-table">
+          <thead>
+            <tr>
+              <th scope="col" style="width: 100px;">Grupo</th>
+              <th scope="col">Cargos Abrangidos</th>
+              <th scope="col" style="width: 220px; text-align: center;">Questões de Informática</th>
+              <th scope="col" style="width: 140px; text-align: center;">Peso</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <span class="group-tag">A</span>
+              </td>
+              <td>
+                Advogado, Analista de Sistemas, Auditor, Contador, Economista, Engenheiros, Médico do Trabalho, Psicólogo, Técnico em Trânsito
+              </td>
+              <td style="text-align: center;">
+                <span class="badge-questoes">6 questões</span>
+              </td>
+              <td style="text-align: center;">
+                <span class="weight-highlight">1,15</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="group-tag">B</span>
+              </td>
+              <td>
+                Eletrotécnico, Inspetor de Segurança, Técnicos de Informática, Técnico de Segurança do Trabalho, Técnico em Processos
+              </td>
+              <td style="text-align: center;">
+                <span class="badge-questoes">6 questões</span>
+              </td>
+              <td style="text-align: center;">
+                <span class="weight-highlight" style="color: #c0392b; font-size: 1.15rem;">1,90 ⭐</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="group-tag">C</span>
+              </td>
+              <td>
+                Agente Administrativo, Agente de Atendimento, Agente de Fiscalização, Eletricista
+              </td>
+              <td style="text-align: center;">
+                <span class="badge-questoes" style="background: #d4edda; color: #155724; font-weight: 800;">8 questões</span>
+              </td>
+              <td style="text-align: center;">
+                <span class="weight-highlight">1,00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="group-tag group-d-tag">D</span>
+              </td>
+              <td style="color: #666;">
+                Agente de Apoio Operacional, Pintor, Serralheiro
+              </td>
+              <td style="text-align: center;">
+                <span class="badge-questoes badge-sem-questoes">Não tem</span>
+              </td>
+              <td style="text-align: center; color: #888;">
+                —
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Seção "Por que escolher este curso" -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="section-header">
+        <h2>Por que escolher este curso</h2>
+        <p>Método direto e validado para garantir o máximo de pontos na prova sem perder tempo.</p>
+      </div>
+
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">🎯</div>
+          <h3 class="why-title">Foco total na banca Objetiva</h3>
+          <p class="why-desc">
+            Questões reais e padrões de cobrança da banca que vai organizar sua prova. Nada de conteúdo genérico ou enrolação de matérias que não caem.
+          </p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon">📚</div>
+          <h3 class="why-title">Material completo em PDF</h3>
+          <p class="why-desc">
+            Apostila digital com resumos, mapas mentais e questões comentadas para você estudar onde e quando quiser, inclusive pelo celular.
+          </p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon">🔄</div>
+          <h3 class="why-title">Aula ao vivo de revisão</h3>
+          <p class="why-desc">
+            Revisão final com o professor ao vivo, tirando dúvidas em tempo real antes da prova. Perdeu o horário? A gravação fica 100% disponível.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção "Sobre o Professor" -->
+  <section class="section-padding" style="background-color: var(--verde-suave);" id="professor">
+    <div class="container">
+      <div class="section-header">
+        <h2>Sobre o Professor</h2>
+        <p>Conheça quem vai guiar sua aprovação em Informática no concurso da EPTC</p>
+      </div>
+
+      <div class="card flex items-center prof-card" style="max-width: 880px; margin: 0 auto; gap: 36px; border: 1.5px solid rgba(26, 107, 60, 0.16); padding: 40px;">
+        <!-- Avatar Circular Verde com Iniciais VC -->
+        <div style="flex-shrink: 0; text-align: center;">
+          <div style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--verde-principal) 0%, var(--verde-escuro) 100%); color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 2.6rem; font-weight: 800; border: 4px solid #ffffff; box-shadow: 0 8px 24px rgba(13, 74, 40, 0.22); letter-spacing: 1px; margin: 0 auto;" aria-label="Iniciais Victor Costa: VC">
+            VC
+          </div>
+          <div style="margin-top: 12px; display: inline-flex; align-items: center; gap: 5px; background: var(--verde-claro); color: var(--verde-escuro); font-size: 0.78rem; font-weight: 700; padding: 4px 12px; border-radius: 20px;">
+            <span>✓</span> Especialista EPTC
+          </div>
+        </div>
+
+        <!-- Conteúdo do Professor -->
+        <div style="flex: 1;">
+          <h3 style="font-size: 1.7rem; font-weight: 800; color: var(--verde-escuro); margin-bottom: 6px; line-height: 1.2;">
+            Prof. Victor Costa
+          </h3>
+          <p style="font-size: 0.98rem; font-weight: 700; color: var(--verde-principal); margin-bottom: 14px; line-height: 1.4;">
+            Professor de Computação · ULBRA · Desenvolvedor Full-Stack · PROCERGS
+          </p>
+          <p style="font-size: 0.96rem; color: #3a4b41; line-height: 1.65; margin-bottom: 18px;">
+            Professor na ULBRA e Desenvolvedor Full-Stack na PROCERGS. Especialista em Angular, Ionic, .NET, JavaScript, React e PHP. Com experiência em preparatórios para concursos, traduz o conteúdo técnico de informática de forma clara e objetiva para você passar na prova da EPTC.
+          </p>
+          <div class="flex prof-tags" style="flex-wrap: wrap; gap: 8px;">
+            <span style="display: inline-flex; align-items: center; gap: 5px; background: #ffffff; border: 1px solid #d0ded3; color: #1e3d29; font-size: 0.82rem; font-weight: 600; padding: 5px 12px; border-radius: 6px;">🎓 Professor ULBRA</span>
+            <span style="display: inline-flex; align-items: center; gap: 5px; background: #ffffff; border: 1px solid #d0ded3; color: #1e3d29; font-size: 0.82rem; font-weight: 600; padding: 5px 12px; border-radius: 6px;">🏛️ Dev Full-Stack PROCERGS</span>
+            <span style="display: inline-flex; align-items: center; gap: 5px; background: #ffffff; border: 1px solid #d0ded3; color: #1e3d29; font-size: 0.82rem; font-weight: 600; padding: 5px 12px; border-radius: 6px;">🎯 Foco na Banca Objetiva</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Seção de Preço / Oferta (id #inscricao) -->
+  <section class="offer-section" id="inscricao">
+    <div class="container">
+      <div class="offer-card">
+        <div class="offer-top-badge">
+          ⏳ CONDIÇÃO ESPECIAL DE LANÇAMENTO
+        </div>
+
+        <h2 class="offer-title">Garanta sua vaga agora</h2>
+
+        <div class="price-box">
+          <div class="old-price">De R$ 197,00 por apenas</div>
+          <div class="current-price"><span>R$</span>47,90</div>
+          <div class="offer-meta">Pagamento único · Acesso imediato · Garantia de 7 dias</div>
+        </div>
+
+        <ul class="offer-list">
+          <li class="offer-item">
+            <span class="offer-check">✅</span>
+            <span>3 módulos gravados de resolução de questões</span>
+          </li>
+          <li class="offer-item">
+            <span class="offer-check">✅</span>
+            <span>1 aula ao vivo de revisão (com gravação)</span>
+          </li>
+          <li class="offer-item">
+            <span class="offer-check">✅</span>
+            <span>Material complementar em PDF de alta qualidade</span>
+          </li>
+          <li class="offer-item">
+            <span class="offer-check">✅</span>
+            <span>Acesso à plataforma exclusiva para alunos</span>
+          </li>
+          <li class="offer-item">
+            <span class="offer-check">✅</span>
+            <span>Fórum de dúvidas direto com o Prof. Victor Costa</span>
+          </li>
+          <li class="offer-item">
+            <span class="offer-check">✅</span>
+            <span>Acesso ilimitado por 12 meses</span>
+          </li>
+        </ul>
+
+        <button type="button" class="btn-offer-cta" id="btnMatricula">
+          QUERO ME INSCREVER AGORA
+        </button>
+
+        <div class="offer-urgency-note">
+          <span>⚠️</span> Inscrições da EPTC encerram em 09/10/2026. Não deixe para a última hora.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. FAQ (Accordion) -->
+  <section class="section-padding bg-light-tone" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <h2>Perguntas Frequentes</h2>
+        <p>Tire suas dúvidas sobre o curso preparatório para a EPTC 2026</p>
+      </div>
+
+      <div class="faq-container">
+        <!-- FAQ 1 -->
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            <span>O curso é focado só em Informática?</span>
+            <span class="faq-chevron" aria-hidden="true">▼</span>
+          </button>
+          <div class="faq-answer">
+            Sim. O curso cobre exclusivamente a matéria de Informática do edital nº 01/2026 da EPTC, com foco total na banca Objetiva e nas pegadinhas clássicas da organizadora.
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            <span>O material é atualizado?</span>
+            <span class="faq-chevron" aria-hidden="true">▼</span>
+          </button>
+          <div class="faq-answer">
+            Sim, 100% atualizado! Todo o material segue rigorosamente o edital recém-publicado da EPTC e as versões cobradas pela banca: Windows 10+, MS Office 2016+, além de Inteligência Artificial e Ferramentas Corporativas.
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            <span>Se eu perder a aula ao vivo?</span>
+            <span class="faq-chevron" aria-hidden="true">▼</span>
+          </button>
+          <div class="faq-answer">
+            Não tem problema algum! A aula ao vivo fica gravada na íntegra na plataforma em até 24 horas. Você pode assistir e reassistir quantas vezes quiser até o dia da prova.
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            <span>Como acesso o curso?</span>
+            <span class="faq-chevron" aria-hidden="true">▼</span>
+          </button>
+          <div class="faq-answer">
+            Após a confirmação do pagamento, você recebe os dados de acesso à plataforma exclusiva instantaneamente por e-mail (em compras via Cartão ou PIX o acesso é liberado em menos de 2 minutos).
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-item">
+          <button class="faq-question" type="button" aria-expanded="false">
+            <span>Tem garantia?</span>
+            <span class="faq-chevron" aria-hidden="true">▼</span>
+          </button>
+          <div class="faq-answer">
+            Sim! Você tem 7 dias de garantia incondicional. Se por qualquer motivo achar que o curso não é para você, basta nos enviar um e-mail que devolveremos 100% do seu dinheiro, sem burocracia.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        CURSO EPTC 2026 — <span>Informática · Prof. Victor Costa</span>
+      </div>
+
+      <p class="footer-disclaimer">
+        Este curso não tem vínculo com a EPTC ou a banca Objetiva. É um curso preparatório independente desenvolvido pelo Prof. Victor Costa para capacitar candidatos ao concurso público.
+      </p>
+
+      <nav class="footer-links" aria-label="Links do rodapé">
+        <a href="#topicos" class="footer-link">Outros cursos</a>
+        <a href="#inscricao" class="footer-link">Já é aluno? Entrar</a>
+        <a href="#faq" class="footer-link">Contato & Suporte</a>
+      </nav>
+
+      <div class="footer-copy">
+        © 2026 Curso Preparatório EPTC. Todos os direitos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Interativo de Matrícula -->
+  <div class="modal-backdrop" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <button class="modal-close" id="modalClose" aria-label="Fechar janela">✕</button>
+      
+      <div style="text-align: center; margin-bottom: 18px;">
+        <span style="font-size: 2.4rem;">🎉</span>
+        <h3 id="modalTitle" style="color: var(--verde-escuro); font-size: 1.45rem; font-weight: 800; margin-top: 6px;">
+          Matrícula EPTC 2026
+        </h3>
+        <p style="font-size: 0.92rem; color: #555;">Você está a um passo da sua aprovação!</p>
+      </div>
+
+      <div style="background: var(--verde-suave); border-radius: 8px; padding: 14px; margin-bottom: 20px; border: 1px solid #d4edda;">
+        <div style="display: flex; justify-content: space-between; font-weight: 700; color: var(--verde-escuro);">
+          <span>Curso Completo de Informática EPTC</span>
+          <span>R$ 47,90</span>
+        </div>
+        <div style="font-size: 0.8rem; color: #555; margin-top: 4px;">Prof. Victor Costa · Acesso por 12 meses</div>
+      </div>
+
+      <form id="checkoutForm" onsubmit="handleFormSubmit(event)">
+        <div style="margin-bottom: 14px;">
+          <label for="studentName" style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; color: #333;">Seu Nome Completo:</label>
+          <input type="text" id="studentName" required placeholder="Ex.: Maria Silva" style="width: 100%; padding: 10px 12px; border: 1.5px solid #ccc; border-radius: 6px; font-size: 0.95rem;">
+        </div>
+
+        <div style="margin-bottom: 18px;">
+          <label for="studentEmail" style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; color: #333;">Seu Melhor E-mail (para receber o acesso):</label>
+          <input type="email" id="studentEmail" required placeholder="Ex.: maria@email.com" style="width: 100%; padding: 10px 12px; border: 1.5px solid #ccc; border-radius: 6px; font-size: 0.95rem;">
+        </div>
+
+        <button type="submit" class="btn-offer-cta" style="font-size: 1.1rem; padding: 14px;">
+          IR PARA PAGAMENTO SEGURO →
+        </button>
+      </form>
+
+      <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; font-size: 0.78rem; color: #777;">
+        <span>🔒 Ambiente Criptografado & Seguro</span>
+        <span>•</span>
+        <span>Garantia de 7 Dias</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 1. Contador Regressivo (15 minutos com persistência em sessionStorage)
+      const countdownEl = document.getElementById('countdownTimer');
+      const TIMER_DURATION_MS = 15 * 60 * 1000; // 15 minutos em ms
+      const STORAGE_KEY = 'eptc_timer_expiry';
+
+      function initCountdown() {
+        let expiry = sessionStorage.getItem(STORAGE_KEY);
+        const now = Date.now();
+
+        if (!expiry || parseInt(expiry, 10) <= now) {
+          expiry = now + TIMER_DURATION_MS;
+          sessionStorage.setItem(STORAGE_KEY, expiry);
+        } else {
+          expiry = parseInt(expiry, 10);
+        }
+
+        function update() {
+          const currentTime = Date.now();
+          let diff = expiry - currentTime;
+
+          // Se zerou, reinicia os 15 minutos conforme edital da página
+          if (diff <= 0) {
+            expiry = Date.now() + TIMER_DURATION_MS;
+            sessionStorage.setItem(STORAGE_KEY, expiry);
+            diff = TIMER_DURATION_MS;
+          }
+
+          const totalSeconds = Math.floor(diff / 1000);
+          const minutes = Math.floor(totalSeconds / 60);
+          const seconds = totalSeconds % 60;
+
+          const formattedMin = String(minutes).padStart(2, '0');
+          const formattedSec = String(seconds).padStart(2, '0');
+
+          countdownEl.textContent = `${formattedMin}:${formattedSec}`;
+
+          // Se faltar menos de 3 minutos (180 segundos), ativa o estado urgente
+          if (totalSeconds <= 180) {
+            countdownEl.classList.add('countdown-urgent');
+          } else {
+            countdownEl.classList.remove('countdown-urgent');
+          }
+        }
+
+        update();
+        setInterval(update, 1000);
+      }
+
+      initCountdown();
+
+      // 2. Menu Hambúrguer Toggle (Mobile)
+      const navToggle = document.getElementById('navToggle');
+      const headerNav = document.getElementById('headerNav');
+
+      if (navToggle && headerNav) {
+        navToggle.addEventListener('click', function() {
+          const isOpen = headerNav.classList.toggle('nav-active');
+          navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        // Fechar ao clicar em algum link interno
+        headerNav.querySelectorAll('a, button').forEach(link => {
+          link.addEventListener('click', () => {
+            headerNav.classList.remove('nav-active');
+            navToggle.setAttribute('aria-expanded', 'false');
+          });
+        });
+      }
+
+      // 3. FAQ Accordion Simples e Acessível
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        const questionBtn = item.querySelector('.faq-question');
+        questionBtn.addEventListener('click', () => {
+          const isOpen = item.classList.contains('is-open');
+
+          // Fecha outros abertos para foco limpo
+          faqItems.forEach(otherItem => {
+            if (otherItem !== item) {
+              otherItem.classList.remove('is-open');
+              const btn = otherItem.querySelector('.faq-question');
+              if (btn) btn.setAttribute('aria-expanded', 'false');
+            }
+          });
+
+          if (isOpen) {
+            item.classList.remove('is-open');
+            questionBtn.setAttribute('aria-expanded', 'false');
+          } else {
+            item.classList.add('is-open');
+            questionBtn.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+
+      // 4. Smooth Scroll para links de âncora
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          const targetId = this.getAttribute('href');
+          if (targetId && targetId !== '#') {
+            const targetEl = document.querySelector(targetId);
+            if (targetEl) {
+              e.preventDefault();
+              const headerOffset = 110;
+              const elementPosition = targetEl.getBoundingClientRect().top;
+              const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+              window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+              });
+            }
+          }
+        });
+      });
+
+      // 5. Modal de Checkout Simulado
+      const btnMatricula = document.getElementById('btnMatricula');
+      const checkoutModal = document.getElementById('checkoutModal');
+      const modalClose = document.getElementById('modalClose');
+
+      if (btnMatricula && checkoutModal) {
+        btnMatricula.addEventListener('click', () => {
+          checkoutModal.classList.add('is-active');
+          const firstInput = document.getElementById('studentName');
+          if (firstInput) firstInput.focus();
+        });
+
+        modalClose.addEventListener('click', () => {
+          checkoutModal.classList.remove('is-active');
+        });
+
+        checkoutModal.addEventListener('click', (e) => {
+          if (e.target === checkoutModal) {
+            checkoutModal.classList.remove('is-active');
+          }
+        });
+      }
+    });
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('studentName').value;
+      alert(`Parabéns, ${name}! Redirecionando para o ambiente seguro de pagamento da plataforma Hotmart para emissão do PIX / Cartão com a taxa promocional de R$ 47,90.`);
+      const modal = document.getElementById('checkoutModal');
+      if (modal) modal.classList.remove('is-active');
+    }
+  </script>
+</body>
+</html>

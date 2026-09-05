@@ -4,21 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curso de Questões Legalle - Prefeitura de Alvorada RS | R$ 29,90</title>
+    <title>Curso de Questões Legalle - Prefeitura de Alvorada RS | R$ 39,90</title>
     <meta name="description"
-        content="Curso de questões resolvidas + aula ao vivo de revisão focada na banca Legalle para o concurso da Prefeitura de Alvorada RS. Acesso imediato. R$ 29,90 via PIX.">
+        content="Curso de questões resolvidas + aula ao vivo de revisão focada na banca Legalle para o concurso da Prefeitura de Alvorada RS. Acesso imediato. R$ 39,90 via PIX.">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Curso Questões Legalle - Prefeitura de Alvorada RS">
     <meta property="og:description"
-        content="Questões resolvidas + aula ao vivo de revisão. Banca Legalle. R$ 29,90 via PIX.">
+        content="Questões resolvidas + aula ao vivo de revisão. Banca Legalle. R$ 39,90 via PIX.">
     <meta property="og:image" content="https://seu-dominio.com/images/brasao-alvorada.png">
     <meta property="og:type" content="website">
 
     <!-- Tailwind + Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@700;800;900&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@700;800;900&display=swap"
         rel="stylesheet">
 
     <link rel="stylesheet" href="css/custom.css">
@@ -33,16 +34,32 @@
             --verde-bg: #f4f7fb;
             --laranja-cta: #ff7a1a;
         }
-        h1, h2, h3 { font-family: 'Poppins', 'Inter', sans-serif; }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Poppins', 'Inter', sans-serif;
+        }
+
         .btn-cta {
             background: var(--laranja-cta) !important;
             box-shadow: 0 4px 15px rgba(255, 122, 26, 0.35) !important;
         }
-        .btn-cta:hover { background: #e06a0f !important; }
+
+        .btn-cta:hover {
+            background: #e06a0f !important;
+        }
+
         .badge-destaque {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: var(--laranja-cta); color: white;
-            padding: 6px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--laranja-cta);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
         }
     </style>
 
@@ -54,7 +71,7 @@
         "name": "Curso de Questões Legalle - Prefeitura de Alvorada RS",
         "description": "Curso de questões resolvidas e aula ao vivo de revisão focada na banca Legalle para o concurso da Prefeitura de Alvorada RS",
         "provider": { "@type": "Organization", "name": "Prof. Victor Costa Melo" },
-        "offers": { "@type": "Offer", "price": "29.90", "priceCurrency": "BRL" }
+        "offers": { "@type": "Offer", "price": "39.90", "priceCurrency": "BRL" }
     }
     </script>
 </head>
@@ -63,11 +80,15 @@
 
     <!-- ==================== BARRA DE URGÊNCIA ==================== -->
     <div class="barra-urgencia">
-        ⚡ EDITAL ABERTO! BANCA LEGALLE — TERMINA EM <span id="countdown" class="countdown-box">00:00:00</span>
+        <span class="barra-icone">🔥</span>
+        <span class="barra-texto">OFERTA RELÂMPAGO! Turma fecha hoje — garantia de vaga encerra em:</span>
+        <span id="countdown" class="countdown-box">15:00</span>
+        <a href="#inscricao" class="barra-cta">GARANTIR AGORA →</a>
     </div>
 
+
     <!-- ==================== HEADER ==================== -->
-    <header style="background: white; border-bottom: 3px solid var(--verde-principal); padding: 14px 0;">
+      <header style="background: white; border-bottom: 3px solid var(--verde-principal); padding: 14px 0;">
         <div class="container flex items-center justify-between" style="flex-wrap: wrap; gap: 10px;">
             <a href="index.html" class="flex items-center" style="gap: 12px; text-decoration: none;">
                 <!-- SVG inline do brasão — não depende de arquivo externo -->
@@ -92,9 +113,21 @@
                 </div>
             </a>
             <button type="button" class="nav-toggle" data-target="nav-alvorada" aria-label="Abrir menu">☰</button>
-            <nav class="nav-links" id="nav-alvorada">
-                <a href="index.html" style="color: var(--verde-principal); font-weight: 600; text-decoration: none; font-size: 0.9rem;">← Outros cursos</a>
-                <a href="login.html" style="color: var(--verde-principal); font-weight: 600; text-decoration: none; font-size: 0.9rem;">Já é aluno? Entrar</a>
+            <nav class="nav-links" id="nav-alvorada" style="display: flex; align-items: center; gap: 12px;">
+                <a href="index.html" style="color: var(--verde-principal); font-weight: 600; text-decoration: none; font-size: 0.85rem;
+                      padding: 8px 16px; border: 1.5px solid var(--verde-principal); border-radius: 8px;
+                      transition: all 0.2s ease; white-space: nowrap;"
+                    onmouseover="this.style.background='var(--verde-principal)'; this.style.color='white';"
+                    onmouseout="this.style.background='white'; this.style.color='var(--verde-principal)';">
+                    ← Outros cursos
+                </a>
+                <a href="login.html" style="color: var(--verde-principal); font-weight: 600; text-decoration: none; font-size: 0.85rem;
+                      padding: 8px 16px; border: 1.5px solid var(--verde-principal); border-radius: 8px;
+                      transition: all 0.2s ease; white-space: nowrap;"
+                    onmouseover="this.style.background='var(--verde-principal)'; this.style.color='white';"
+                    onmouseout="this.style.background='white'; this.style.color='var(--verde-principal)';">
+                    Já é aluno? Entrar
+                </a>
                 <a href="#inscricao" class="btn-cta header-btn">QUERO ME INSCREVER</a>
             </nav>
         </div>
@@ -144,19 +177,15 @@
                     <a href="#inscricao" class="btn-cta">QUERO ME PREPARAR →</a>
 
                     <p style="font-size: 0.85rem; color: var(--cinza-claro); margin-top: 12px;">
-                        ✓ 3 módulos gravados + aula ao vivo · ✓ Pagamento via PIX · ✓ R$ 29,90 à vista
+                        ✓ 3 módulos gravados + aula ao vivo · ✓ Pagamento via PIX · ✓ R$ 39,90 à vista
                     </p>
                 </div>
 
                 <div style="text-align: center; position: relative;">
-                    <img src="imagens/professor-victor.png" alt="Prof. Victor Costa - Curso Alvorada Legalle"
-                        style="border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); max-width: 100%;">
+                    <img src="imagens/banner-alvorada.png" alt="banner - Curso Alvorada Legalle"
+                        style="border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); max-width: 80%;">
 
-                    <div
-                        style="position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%); background: var(--verde-escuro); border-radius: 12px; padding: 14px 24px; box-shadow: 0 6px 20px rgba(0,0,0,0.2); max-width: 90%; text-align: center;">
-                        <div style="font-size: 1rem; font-weight: 800; color: white; white-space: nowrap;">🎓 Prof. Victor Costa Melo</div>
-                        <div style="font-size: 0.75rem; color: rgba(255,255,255,0.8);">ULBRA · PROCERGS · 10+ anos de magistério</div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -245,61 +274,117 @@
                 <!-- Módulo 1 -->
                 <div class="card">
                     <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
-                        <span style="background: var(--verde-principal); color: white; font-weight: 800; font-size: 0.8rem; padding: 4px 12px; border-radius: 50px;">MÓDULO 1</span>
-                        <span style="background: var(--verde-claro); color: var(--verde-principal); font-weight: 700; font-size: 0.75rem; padding: 4px 12px; border-radius: 50px;">🎬 GRAVADO</span>
+                        <span
+                            style="background: var(--verde-principal); color: white; font-weight: 800; font-size: 0.8rem; padding: 4px 12px; border-radius: 50px;">MÓDULO
+                            1</span>
+                        <span
+                            style="background: var(--verde-claro); color: var(--verde-principal); font-weight: 700; font-size: 0.75rem; padding: 4px 12px; border-radius: 50px;">🎬
+                            GRAVADO</span>
                     </div>
-                    <div style="font-size: 2.5rem; margin-bottom: 8px;">📝</div>
+                    <div style="font-size: 2.5rem; margin-bottom: 8px;">📄</div>
                     <h3 style="font-size: 1.2rem; margin-bottom: 8px; color: var(--verde-escuro);">Resolução de Questões
-                        I</h3>
-                    <p style="color: var(--cinza-claro);">Aula gravada resolvendo questões reais no estilo Legalle. Você
-                        vê o passo a passo da resolução e aprende a identificar os detalhes que diferenciam a
-                        alternativa certa das erradas.</p>
+                        — Microsoft Word</h3>
+                    <p style="color: var(--cinza-claro); margin-bottom: 12px;">
+                        Aula gravada com resolução passo a passo de questões reais de
+                        <strong>Microsoft Word</strong> no estilo da banca Legalle. Você vê exatamente como identificar
+                        os detalhes que separam a alternativa certa das erradas.
+                    </p>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px;">
+                        <li style="color: var(--cinza-claro); font-size: 0.85rem;">📄 Material complementar em PDF</li>
+                        <li style="color: var(--cinza-claro); font-size: 0.85rem;">🔐 Acesso à plataforma exclusiva</li>
+                        <li style="color: var(--cinza-claro); font-size: 0.85rem;">💬 Fórum de dúvidas com o professor
+                        </li>
+                    </ul>
                 </div>
 
                 <!-- Módulo 2 -->
                 <div class="card">
                     <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
-                        <span style="background: var(--verde-principal); color: white; font-weight: 800; font-size: 0.8rem; padding: 4px 12px; border-radius: 50px;">MÓDULO 2</span>
-                        <span style="background: var(--verde-claro); color: var(--verde-principal); font-weight: 700; font-size: 0.75rem; padding: 4px 12px; border-radius: 50px;">🎬 GRAVADO</span>
+                        <span
+                            style="background: var(--verde-principal); color: white; font-weight: 800; font-size: 0.8rem; padding: 4px 12px; border-radius: 50px;">MÓDULO
+                            2</span>
+                        <span
+                            style="background: var(--verde-claro); color: var(--verde-principal); font-weight: 700; font-size: 0.75rem; padding: 4px 12px; border-radius: 50px;">🎬
+                            GRAVADO</span>
                     </div>
-                    <div style="font-size: 2.5rem; margin-bottom: 8px;">📝</div>
+                    <div style="font-size: 2.5rem; margin-bottom: 8px;">🪟</div>
                     <h3 style="font-size: 1.2rem; margin-bottom: 8px; color: var(--verde-escuro);">Resolução de Questões
-                        II</h3>
-                    <p style="color: var(--cinza-claro);">Segunda etapa de resolução com questões mais avançadas.
-                        Aprofundamento nos temas que mais caem e nos padrões de cobrança da banca Legalle.</p>
+                        — Windows</h3>
+                    <p style="color: var(--cinza-claro); margin-bottom: 12px;">
+                        Aula gravada com resolução de questões reais de
+                        <strong>Windows</strong> cobradas pela banca Legalle. Aprenda os padrões de cobrança e
+                        os detalhes do sistema operacional que mais caem em prova.
+                    </p>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px;">
+                        <li style="color: var(--cinza-claro); font-size: 0.85rem;">📄 Material complementar em PDF</li>
+                        <li style="color: var(--cinza-claro); font-size: 0.85rem;">🔐 Acesso à plataforma exclusiva</li>
+                        <li style="color: var(--cinza-claro); font-size: 0.85rem;">💬 Fórum de dúvidas com o professor
+                        </li>
+                    </ul>
                 </div>
 
                 <!-- Módulo 3 -->
                 <div class="card">
                     <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
-                        <span style="background: var(--verde-principal); color: white; font-weight: 800; font-size: 0.8rem; padding: 4px 12px; border-radius: 50px;">MÓDULO 3</span>
-                        <span style="background: var(--verde-claro); color: var(--verde-principal); font-weight: 700; font-size: 0.75rem; padding: 4px 12px; border-radius: 50px;">🎬 GRAVADO</span>
+                        <span
+                            style="background: var(--verde-principal); color: white; font-weight: 800; font-size: 0.8rem; padding: 4px 12px; border-radius: 50px;">MÓDULO
+                            3</span>
+                        <span
+                            style="background: var(--verde-claro); color: var(--verde-principal); font-weight: 700; font-size: 0.75rem; padding: 4px 12px; border-radius: 50px;">🎬
+                            GRAVADO</span>
                     </div>
-                    <div style="font-size: 2.5rem; margin-bottom: 8px;">📝</div>
+                    <div style="font-size: 2.5rem; margin-bottom: 8px;">🌐</div>
                     <h3 style="font-size: 1.2rem; margin-bottom: 8px; color: var(--verde-escuro);">Resolução de Questões
-                        III</h3>
-                    <p style="color: var(--cinza-claro);">Terceira etapa com questões inéditas e simulação de prova
-                        real. Fechamento dos conteúdos com resolução comentada de cada alternativa.</p>
+                        — Navegadores (Chrome)</h3>
+                    <p style="color: var(--cinza-claro); margin-bottom: 12px;">
+                        Aula gravada com resolução de questões de
+                        <strong>navegadores, com foco em Google Chrome</strong>. Você domina os recursos,
+                        atalhos e configurações que a banca Legalle mais cobra em prova.
+                    </p>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px;">
+                        <li style="color: var(--cinza-claro); font-size: 0.85rem;">📄 Material complementar em PDF</li>
+                        <li style="color: var(--cinza-claro); font-size: 0.85rem;">🔐 Acesso à plataforma exclusiva</li>
+                        <li style="color: var(--cinza-claro); font-size: 0.85rem;">💬 Fórum de dúvidas com o professor
+                        </li>
+                    </ul>
                 </div>
 
-                <!-- Aula ao vivo -->
+                <!-- Módulo 4 — Aula ao vivo -->
                 <div class="card" style="border: 2px solid var(--verde-principal); position: relative;">
                     <div
                         style="position: absolute; top: -10px; right: 20px; background: var(--vermelho-urgencia); color: white; font-weight: 800; font-size: 0.7rem; padding: 4px 12px; border-radius: 50px;">
                         AO VIVO</div>
-                    <div
-                        style="display: inline-block; background: var(--verde-escuro); color: white; font-weight: 800; font-size: 0.8rem; padding: 4px 12px; border-radius: 50px; margin-bottom: 12px;">
-                        AULA FINAL</div>
-                    <div style="font-size: 2.5rem; margin-bottom: 8px;">🎥</div>
-                    <h3 style="font-size: 1.2rem; margin-bottom: 8px; color: var(--verde-escuro);">Revisão Geral Ao Vivo
-                    </h3>
-                    <p style="color: var(--cinza-claro);">Aula final ao vivo de revisão geral focada nos pontos mais
-                        cobrados pela Legalle. Tire dúvidas em tempo real. Não conseguiu assistir? Fica 100% gravada.
+                    <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+                        <span
+                            style="background: var(--verde-escuro); color: white; font-weight: 800; font-size: 0.8rem; padding: 4px 12px; border-radius: 50px;">MÓDULO
+                            4</span>
+                        <span
+                            style="background: var(--verde-claro); color: var(--verde-principal); font-weight: 700; font-size: 0.75rem; padding: 4px 12px; border-radius: 50px;">🎥
+                            AO VIVO + GRAVADO</span>
+                    </div>
+                    <div style="font-size: 2.5rem; margin-bottom: 8px;">🎯</div>
+                    <h3 style="font-size: 1.2rem; margin-bottom: 8px; color: var(--verde-escuro);">Revisão Ao Vivo —
+                        Tira-Dúvidas Final</h3>
+                    <p style="color: var(--cinza-claro); margin-bottom: 12px;">
+                        Aula <strong>ao vivo e online</strong> para revisar tudo o que foi visto nos módulos anteriores.
+                        Tire suas dúvidas em tempo real, tire a prova dos conceitos e
+                        <strong>saia na frente dos concorrentes</strong>. Não conseguiu assistir ao vivo?
+                        Fica <strong>100% gravada</strong> para você assistir quando quiser.
                     </p>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px;">
+                        <li style="color: var(--cinza-claro); font-size: 0.85rem;">🔴 Transmissão ao vivo em tempo real
+                        </li>
+                        <li style="color: var(--cinza-claro); font-size: 0.85rem;">▶️ Gravação disponível após a aula
+                        </li>
+                        <li style="color: var(--cinza-claro); font-size: 0.85rem;">💬 Interação direta com o professor
+                        </li>
+                    </ul>
                 </div>
-
             </div>
-        </div>
     </section>
 
     <!-- ==================== AUTORIDADE ==================== -->
@@ -308,7 +393,7 @@
             <div class="grid grid-cols-3 gap-8 items-center">
                 <div style="text-align: center;">
                     <img src="imagens/professor-victor.png" alt="Prof. Victor Costa Melo"
-                        style="border-radius: 16px; width: 180px; height: 180px; object-fit: cover; margin: 0 auto; box-shadow: 0 6px 20px rgba(0,0,0,0.12);">
+                        style="border-radius: 16px; width: 300px; height: 380px; object-fit: cover; margin: 0 auto; box-shadow: 0 6px 20px rgba(0,0,0,0.12);">
                 </div>
                 <div style="grid-column: span 2;">
                     <h2 style="font-size: 1.7rem; color: var(--verde-escuro); margin-bottom: 12px;">
@@ -322,7 +407,8 @@
                         Conheço o estilo das bancas regionais como a Legalle e sei exatamente onde os candidatos erram.
                         Criei este curso para corrigir os erros mais comuns e te colocar à frente da concorrência.
                     </p>
-                    <p style="color: var(--verde-escuro); font-weight: 700; font-style: italic; margin-bottom: 20px; border-left: 3px solid var(--laranja-cta); padding-left: 14px;">
+                    <p
+                        style="color: var(--verde-escuro); font-weight: 700; font-style: italic; margin-bottom: 20px; border-left: 3px solid var(--laranja-cta); padding-left: 14px;">
                         "Aprenda com quem une experiência prática em tecnologia e mais de uma década de ensino —
                         sei exatamente onde os candidatos perdem pontos."
                     </p>
@@ -366,19 +452,23 @@
                     <ul style="list-style: none; padding: 0;">
                         <li style="margin-bottom: 14px; display: flex; align-items: start; gap: 10px;">
                             <span style="color: #4ade80; font-size: 1.2rem; flex-shrink: 0;">✓</span>
-                            <span><strong>Módulo 1:</strong> Resolução de questões gravada (estilo Legalle)</span>
+                            <span><strong>Módulo 1:</strong> Resolução de questões Microsoft Word - gravada + Material
+                                em PDF</span>
                         </li>
                         <li style="margin-bottom: 14px; display: flex; align-items: start; gap: 10px;">
                             <span style="color: #4ade80; font-size: 1.2rem; flex-shrink: 0;">✓</span>
-                            <span><strong>Módulo 2:</strong> Resolução avançada de questões gravada</span>
+                            <span><strong>Módulo 2:</strong> Resolução de questões Microsoft Windows - gravada +
+                                Material em PDF</span>
                         </li>
                         <li style="margin-bottom: 14px; display: flex; align-items: start; gap: 10px;">
                             <span style="color: #4ade80; font-size: 1.2rem; flex-shrink: 0;">✓</span>
-                            <span><strong>Módulo 3:</strong> Resolução de questões inéditas + simulação de prova</span>
+                            <span><strong>Módulo 3:</strong> Resolução de questões Navegadores - gravada + Material em
+                                PDF</span>
                         </li>
                         <li style="margin-bottom: 14px; display: flex; align-items: start; gap: 10px;">
                             <span style="color: #4ade80; font-size: 1.2rem; flex-shrink: 0;">✓</span>
-                            <span><strong>Aula final ao vivo</strong> de revisão geral (também gravada)</span>
+                            <span><strong>Aula final ao vivo</strong> de revisão geral (também disponível
+                                gravada)</span>
                         </li>
                         <li style="margin-bottom: 14px; display: flex; align-items: start; gap: 10px;">
                             <span style="color: #4ade80; font-size: 1.2rem; flex-shrink: 0;">✓</span>
@@ -392,8 +482,11 @@
 
                     <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.2);">
                         <div style="text-decoration: line-through; opacity: 0.6; font-size: 1.1rem;">De R$ 67,00</div>
-                        <div style="font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.85; margin-bottom: 2px;">Acesso completo por apenas</div>
-                        <div class="preco-destaque" style="font-size: 3.2rem; font-weight: 900; color: var(--laranja-cta);">R$ 29,90</div>
+                        <div
+                            style="font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.85; margin-bottom: 2px;">
+                            Acesso completo por apenas</div>
+                        <div class="preco-destaque"
+                            style="font-size: 3.2rem; font-weight: 900; color: var(--laranja-cta);">R$ 39,90</div>
                         <div style="font-size: 0.9rem; opacity: 0.8;">Pagamento único via PIX · Acesso imediato</div>
                     </div>
                 </div>
@@ -461,7 +554,7 @@
                         </div>
 
                         <button type="button" id="btn-submit" class="btn-cta" style="width: 100%; font-size: 1.1rem;">
-                            PAGAR R$ 29,90 VIA PIX →
+                            PAGAR R$ 39,90 VIA PIX →
                         </button>
 
                         <p style="font-size: 0.75rem; color: var(--cinza-claro); text-align: center; margin-top: 12px;">
@@ -477,8 +570,12 @@
                 <div style="font-size: 3rem;">🛡️</div>
                 <div style="text-align: left;">
                     <div style="font-weight: 800; color: var(--verde-escuro);">Garantia de 7 dias</div>
-                    <div style="font-size: 0.9rem; color: var(--cinza-claro);">Não gostou? Devolvemos 100% do seu
-                        dinheiro. Sem perguntas.</div>
+                    <div style="font-size: 0.9rem; color: var(--cinza-claro);">Se dentro do prazo de 7 dias você
+                        entender
+                        que a metodologia do Curso Alvorada não é o caminho mais rápido para a sua aprovação no Edital
+                        01/2026,
+                        basta enviar uma mensagem pelo WhatsApp ou e-mail. Nós devolveremos 100% do valor pago via PIX,
+                        sem burocracia, sem perguntas e sem ressentimentos.</div>
                 </div>
             </div>
         </div>
@@ -505,7 +602,7 @@
                     <div
                         style="width: 60px; height: 60px; background: var(--verde-claro); color: var(--verde-principal); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900; margin: 0 auto 16px;">
                         2</div>
-                    <h3 style="font-size: 1.1rem; color: var(--verde-escuro); margin-bottom: 8px;">Pague R$ 29,90 via
+                    <h3 style="font-size: 1.1rem; color: var(--verde-escuro); margin-bottom: 8px;">Pague R$ 39,90 via
                         PIX</h3>
                     <p style="color: var(--cinza-claro); font-size: 0.95rem;">O QR Code e a chave PIX aparecem logo após
                         o cadastro.</p>
@@ -559,7 +656,7 @@
             <details class="faq-item">
                 <summary>Como funciona a garantia de 7 dias? <span>▼</span></summary>
                 <p>Você tem 7 dias para testar o curso. Se não gostar por qualquer motivo, basta enviar um WhatsApp ou
-                    e-mail e devolvemos 100% dos R$ 29,90. Sem burocracia.</p>
+                    e-mail e devolvemos 100% dos R$ 39,90. Sem burocracia.</p>
             </details>
 
             <details class="faq-item">
@@ -577,7 +674,7 @@
                 O edital já está publicado. A prova vem aí.
             </h2>
             <p style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 32px;">
-                Cada dia sem treinar o estilo da Legalle é um ponto a menos na sua prova. Comece agora por R$ 29,90.
+                Cada dia sem treinar o estilo da Legalle é um ponto a menos na sua prova. Comece agora por R$ 39,90.
             </p>
             <a href="#inscricao" class="btn-cta" style="background: white; color: var(--verde-principal);">
                 QUERO ME INSCREVER AGORA →
@@ -607,7 +704,7 @@
         </div>
         <div
             style="border-top: 1px solid rgba(255,255,255,0.1); padding: 16px 0; text-align: center; font-size: 0.8rem; opacity: 0.5;">
-            © 2026 Curso Alvorada · Prof. Victor Costa Melo 
+            © 2026 Curso Alvorada · Prof. Victor Costa Melo
         </div>
     </footer>
 
@@ -632,11 +729,12 @@
                 style="float: right; background: none; border: none; font-size: 1.5rem; color: #999; cursor: pointer;">×</button>
 
             <div style="margin-bottom: 20px;">
-                <span class="badge-institucional" style="background: #e8f5ed;" id="status-cadastro">✅ Cadastro realizado!</span>
+                <span class="badge-institucional" style="background: #e8f5ed;" id="status-cadastro">✅ Cadastro
+                    realizado!</span>
             </div>
 
             <h3 style="font-size: 1.4rem; color: var(--verde-escuro); margin-bottom: 8px;">
-                Pague R$ 29,90 via PIX
+                Pague R$ 39,90 via PIX
             </h3>
             <p style="color: var(--cinza-claro); font-size: 0.9rem; margin-bottom: 24px;">
                 Escaneie o QR Code abaixo ou copie o código PIX. Seu acesso será liberado após a confirmação.
@@ -681,7 +779,7 @@
                     ⏳ Próximos passos:
                 </p>
                 <p style="font-size: 0.82rem; color: var(--cinza-claro); line-height: 1.7;">
-                    1. Pague o PIX de R$ 29,90<br>
+                    1. Pague o PIX de R$ 39,90<br>
                     2. Envie o comprovante no WhatsApp<br>
                     3. Receba o acesso no seu Gmail
                 </p>

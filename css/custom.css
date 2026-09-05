@@ -66,12 +66,23 @@ h1, h2, h3 {
 
 /* Barra de urgência */
 .barra-urgencia {
-    background: var(--vermelho-urgencia);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    background: linear-gradient(90deg, #c0392b, #e74c3c);
     color: white;
-    text-align: center;
-    padding: 8px 20px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 700;
+    padding: 8px 16px;
+    margin: 0;
+    text-align: center;
+    letter-spacing: 0.3px;
+    box-shadow: none; /* era 0 2px 8px rgba(0,0,0,0.15) — isso criava a linha */
 }
 
 /* Cards institucionais */

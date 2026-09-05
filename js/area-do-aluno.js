@@ -9,7 +9,7 @@ function driveEmbedUrl(link) {
 }
 
 document.addEventListener('DOMContentLoaded', async function () {
-    const { data: { session } } = await supabaseClient.auth.getSession();
+    const session = typeof verificarSessao === 'function' ? await verificarSessao() : (await supabaseClient.auth.getSession()).data.session;
 
     if (!session) {
         window.location.href = 'login.html';
@@ -19,8 +19,74 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     document.getElementById('btn-sair').addEventListener('click', async function () {
         await supabaseClient.auth.signOut();
+        if (typeof encerrarSessao === 'function') encerrarSessao();
         window.location.href = 'login.html';
     });
+
+    // ===== Modal Alterar Senha =====
+    const btnModalSenha = document.getElementById('btn-alterar-senha-modal');
+    const modalSenha = document.getElementById('modal-alterar-senha');
+    const btnFecharModalSenha = document.getElementById('btn-fechar-modal-senha');
+    const btnConfirmarSenha = document.getElementById('btn-confirmar-alterar-senha');
+    const msgSenhaStatus = document.getElementById('msg-senha-status');
+
+    if (btnModalSenha && modalSenha) {
+        btnModalSenha.addEventListener('click', function () {
+            modalSenha.style.display = 'flex';
+            if (msgSenhaStatus) msgSenhaStatus.style.display = 'none';
+            document.getElementById('nova-senha-input').value = '';
+            document.getElementById('confirmar-senha-input').value = '';
+        });
+    }
+
+    if (btnFecharModalSenha && modalSenha) {
+        btnFecharModalSenha.addEventListener('click', function () {
+            modalSenha.style.display = 'none';
+        });
+    }
+
+    if (btnConfirmarSenha) {
+        btnConfirmarSenha.addEventListener('click', async function () {
+            const novaSenha = document.getElementById('nova-senha-input').value;
+            const confirmarSenha = document.getElementById('confirmar-senha-input').value;
+
+            if (!novaSenha || novaSenha.length < 6) {
+                mostrarStatusSenha('A nova senha precisa ter no mínimo 6 caracteres.', false);
+                return;
+            }
+
+            if (novaSenha !== confirmarSenha) {
+                mostrarStatusSenha('As senhas não coincidem. Digite novamente.', false);
+                return;
+            }
+
+            btnConfirmarSenha.disabled = true;
+            btnConfirmarSenha.textContent = 'SALVANDO...';
+
+            const { error } = await supabaseClient.auth.updateUser({ password: novaSenha });
+
+            if (error) {
+                mostrarStatusSenha('Erro ao alterar senha: ' + error.message, false);
+            } else {
+                mostrarStatusSenha('✅ Senha alterada com sucesso!', true);
+                setTimeout(function () {
+                    if (modalSenha) modalSenha.style.display = 'none';
+                }, 1800);
+            }
+
+            btnConfirmarSenha.disabled = false;
+            btnConfirmarSenha.textContent = 'SALVAR NOVA SENHA';
+        });
+    }
+
+    function mostrarStatusSenha(msg, sucesso) {
+        if (!msgSenhaStatus) return;
+        msgSenhaStatus.textContent = msg;
+        msgSenhaStatus.style.display = 'block';
+        msgSenhaStatus.style.background = sucesso ? '#e8f5ed' : '#fdecea';
+        msgSenhaStatus.style.color = sucesso ? '#16a34a' : '#dc3545';
+        msgSenhaStatus.style.border = '1px solid ' + (sucesso ? '#c3e6cb' : '#f5c6cb');
+    }
 
     const { data: perfil } = await supabaseClient
         .from('profiles')
