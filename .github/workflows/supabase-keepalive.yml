@@ -1,0 +1,55 @@
+name: Supabase Keepalive
+
+# Evita que o projeto Supabase free tier pause por 7 dias de inatividade.
+# Faz uma consulta real (SELECT) na tabela "cursos" via REST a cada 4 dias —
+# isso conta como "atividade no banco" mesmo que a RLS devolva uma lista vazia,
+# porque a query chega a ser executada no Postgres.
+#
+# Observações importantes:
+# - Esse workflow só é agendado de fato depois que este arquivo for enviado (push)
+#   para o branch padrão do repositório no GitHub.
+# - O GitHub desativa automaticamente workflows agendados se o repositório ficar
+#   60 dias sem NENHUMA atividade (commit, PR, etc.) — não é algo que o próprio
+#   workflow resolve. Se o site ficar muito tempo sem receber commits, vale a pena
+#   checar a aba Actions de vez em quando ou reativar manualmente.
+# - A SUPABASE_ANON_KEY usada aqui é a mesma chave pública ("publishable key")
+#   já exposta em js/supabase-config.js — não é segredo, por isso está direto
+#   no workflow em vez de em um GitHub Secret.
+
+on:
+  schedule:
+    - cron: '0 3 */4 * *' # a cada ~4 dias, às 03:00 UTC
+  workflow_dispatch: {} # permite rodar manualmente na aba Actions para testar
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST API
+        env:
+          SUPABASE_URL: https://oqaaeoalntsiqybybdta.supabase.co
+          SUPABASE_ANON_KEY: sb_publishable_z-k8LnOxUfyb5jD_J1qBZQ_H9XCLONC
+        run: |
+          set -e
+
+          HTTP_STATUS=$(curl -s -o /tmp/response.json -w "%{http_code}" \
+            "$SUPABASE_URL/rest/v1/cursos?select=id&limit=1" \
+            -H "apikey: $SUPABASE_ANON_KEY" \
+            -H "Authorization: Bearer $SUPABASE_ANON_KEY")
+
+          echo "HTTP status: $HTTP_STATUS"
+          echo "Resposta:"
+          cat /tmp/response.json
+          echo ""
+
+          # Qualquer resposta HTTP (200, 401, 403...) significa que a requisição
+          # chegou ao Postgres e contou como atividade. Só tratamos como falha
+          # erro de conexão (000) ou erro de servidor (5xx), que podem indicar
+          # que o projeto ainda está pausado/indisponível.
+          if [ "$HTTP_STATUS" = "000" ] || [ "$HTTP_STATUS" -ge 500 ]; then
+            echo "Supabase não respondeu como esperado (status $HTTP_STATUS)."
+            echo "O projeto pode ainda estar pausado ou inacessível — verifique o dashboard."
+            exit 1
+          fi
+
+          echo "Ping concluído — contou como atividade no banco."
